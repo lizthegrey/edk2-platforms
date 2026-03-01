@@ -118,7 +118,7 @@ READ_LOCK_STATUS   = TRUE
   INF ArmPkg/Drivers/TimerDxe/TimerDxe.inf
   INF ArmPkg/Drivers/GenericWatchdogDxe/GenericWatchdogDxe.inf
 !if $(SECURE_BOOT_ENABLE) == TRUE
-  INF ArmPkg/Drivers/MmCommunicationDxe/MmCommunication.inf
+  INF ArmPkg/Drivers/MmCommunicationOpteeDxe/MmCommunication.inf
   INF MdeModulePkg/Universal/Variable/RuntimeDxe/VariableSmmRuntimeDxe.inf
   INF SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
 !else

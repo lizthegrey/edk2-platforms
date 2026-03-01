@@ -33,7 +33,7 @@
 #
 ################################################################################
 [LibraryClasses]
-  ArmSvcLib|ArmPkg/Library/ArmSvcLib/ArmSvcLib.inf
+  ArmSvcLib|MdePkg/Library/ArmSvcLib/ArmSvcLib.inf
   ArmLib|ArmPkg/Library/ArmLib/ArmBaseLib.inf
   BaseLib|MdePkg/Library/BaseLib/BaseLib.inf
   BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
@@ -41,8 +41,9 @@
   DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
   DebugPrintErrorLevelLib|MdePkg/Library/BaseDebugPrintErrorLevelLib/BaseDebugPrintErrorLevelLib.inf
   ExtractGuidedSectionLib|EmbeddedPkg/Library/PrePiExtractGuidedSectionLib/PrePiExtractGuidedSectionLib.inf
-  FvLib|StandaloneMmPkg/Library/FvLib/FvLib.inf
+  FvLib|MdePkg/Library/FvLib/FvLib.inf
   HobLib|StandaloneMmPkg/Library/StandaloneMmCoreHobLib/StandaloneMmCoreHobLib.inf
+  HobPrintLib|MdeModulePkg/Library/HobPrintLib/HobPrintLib.inf
   IoLib|MdePkg/Library/BaseIoLibIntrinsic/BaseIoLibIntrinsic.inf
   MemLib|StandaloneMmPkg/Library/StandaloneMmMemLib/StandaloneMmMemLib.inf
   MemoryAllocationLib|StandaloneMmPkg/Library/StandaloneMmCoreMemoryAllocationLib/StandaloneMmCoreMemoryAllocationLib.inf
@@ -52,11 +53,20 @@
   ReportStatusCodeLib|MdePkg/Library/BaseReportStatusCodeLibNull/BaseReportStatusCodeLibNull.inf
   RngLib|MdePkg/Library/BaseRngLibTimerLib/BaseRngLibTimerLib.inf
   SafeIntLib|MdePkg/Library/BaseSafeIntLib/BaseSafeIntLib.inf
+  PerformanceLib|MdePkg/Library/BasePerformanceLibNull/BasePerformanceLibNull.inf
+  ImagePropertiesRecordLib|MdeModulePkg/Library/ImagePropertiesRecordLib/ImagePropertiesRecordLib.inf
+  StackCheckLib|MdePkg/Library/StackCheckLibNull/StackCheckLibNull.inf
+  PeCoffGetEntryPointLib|MdePkg/Library/BasePeCoffGetEntryPointLib/BasePeCoffGetEntryPointLib.inf
+  VariableFlashInfoLib|MdeModulePkg/Library/BaseVariableFlashInfoLib/BaseVariableFlashInfoLib.inf
+  ArmSmcLib|MdePkg/Library/ArmSmcLib/ArmSmcLib.inf
+  ArmFfaLib|MdeModulePkg/Library/ArmFfaLib/ArmFfaStandaloneMmCoreLib.inf
+  MmServicesTableLib|MdePkg/Library/StandaloneMmServicesTableLib/StandaloneMmServicesTableLib.inf
 
   #
   # Entry point
   #
-  StandaloneMmCoreEntryPoint|StandaloneMmPkg/Library/StandaloneMmCoreEntryPoint/StandaloneMmCoreEntryPoint.inf
+  ArmTransferListLib|ArmPkg/Library/ArmTransferListLib/ArmTransferListLib.inf
+  StandaloneMmCoreEntryPoint|ArmPkg/Library/ArmStandaloneMmCoreEntryPoint/ArmStandaloneMmCoreEntryPoint.inf
   StandaloneMmDriverEntryPoint|MdePkg/Library/StandaloneMmDriverEntryPoint/StandaloneMmDriverEntryPoint.inf
 
   StandaloneMmMmuLib|ArmPkg/Library/StandaloneMmMmuLib/ArmMmuStandaloneMmLib.inf
@@ -76,18 +86,17 @@
   # This library provides the intrinsic functions generate by a given compiler.
   # NULL means link this library into all ARM images.
   #
-  NULL|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
+  NULL|MdePkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
 
   SocClockLib|Silicon/NXP/LX2160A/Library/SocClockLib/SocClockLib.inf
   I2cLib|Silicon/NXP/Library/I2cLib/I2cLib.inf
 
 [LibraryClasses.common.MM_STANDALONE]
   HobLib|StandaloneMmPkg/Library/StandaloneMmHobLib/StandaloneMmHobLib.inf
-  MmServicesTableLib|MdePkg/Library/StandaloneMmServicesTableLib/StandaloneMmServicesTableLib.inf
   MemoryAllocationLib|StandaloneMmPkg/Library/StandaloneMmMemoryAllocationLib/StandaloneMmMemoryAllocationLib.inf
   BoardInfoLib|Platform/SolidRun/LX2160aCex7/Library/BoardInfoLib/BoardInfoLib.inf
 
-  NULL|ArmPkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
+  NULL|MdePkg/Library/CompilerIntrinsicsLib/CompilerIntrinsicsLib.inf
 
   BaseCryptLib|CryptoPkg/Library/BaseCryptLib/BaseCryptLib.inf
   OpensslLib|CryptoPkg/Library/OpensslLib/OpensslLib.inf
@@ -131,7 +140,6 @@
 
 [PcdsFeatureFlag]
   gNxpQoriqLsTokenSpaceGuid.PcdI2cErratumA009203|TRUE
-  gArmTokenSpaceGuid.PcdFfaEnable|TRUE
 
 [PcdsPatchableInModule]
   # Allocated memory for EDK2 uppers layers
@@ -173,7 +181,7 @@
       gEfiMdePkgTokenSpaceGuid.PcdMaximumGuidedExtractHandler|0x2
   }
 
-  StandaloneMmPkg/Drivers/StandaloneMmCpu/AArch64/StandaloneMmCpu.inf
+  ArmPkg/Drivers/StandaloneMmCpu/StandaloneMmCpu.inf
   Silicon/NXP/Drivers/I2cMm/I2cMm.inf
   Silicon/NXP/Drivers/RtcMm/RtcMm.inf
   Silicon/NXP/Drivers/EepromFvb/EepromFvb.inf
@@ -185,7 +193,7 @@
     <LibraryClasses>
       AuthVariableLib|SecurityPkg/Library/AuthVariableLib/AuthVariableLib.inf
       BaseCryptLib|CryptoPkg/Library/BaseCryptLib/SmmCryptLib.inf
-      DevicePathLib|MdePkg/Library/UefiDevicePathLib/UefiDevicePathLib.inf
+      DevicePathLib|MdePkg/Library/UefiDevicePathLib/UefiDevicePathLibBase.inf
       VarCheckLib|MdeModulePkg/Library/VarCheckLib/VarCheckLib.inf
       NULL|MdeModulePkg/Library/VarCheckUefiLib/VarCheckUefiLib.inf
       NULL|Silicon/NXP/Drivers/EepromFvb/FixupPcd.inf

@@ -72,7 +72,7 @@ READ_LOCK_STATUS   = TRUE
   INF Silicon/NXP/Drivers/EepromFvb/EepromFvb.inf
   INF MdeModulePkg/Universal/FaultTolerantWriteDxe/FaultTolerantWriteStandaloneMm.inf
   INF MdeModulePkg/Universal/Variable/RuntimeDxe/VariableStandaloneMm.inf
-  INF StandaloneMmPkg/Drivers/StandaloneMmCpu/AArch64/StandaloneMmCpu.inf
+  INF ArmPkg/Drivers/StandaloneMmCpu/StandaloneMmCpu.inf
 ################################################################################
 #
 # Rules are use with the [FV] section's module INF type to define

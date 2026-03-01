@@ -66,6 +66,12 @@
   Dpaa2McInterfaceLib|Silicon/NXP/Library/Dpaa2McInterfaceLib/Dpaa2McInterfaceLib.inf
   SecureMonRngLib|Silicon/NXP/Library/SecureMonRngLib/SecureMonRngLib.inf
   MemoryInitPeiLib|Silicon/NXP/Library/MemoryInitPei/MemoryInitPeiLib.inf
+!if $(SECURE_BOOT_ENABLE) == TRUE
+  OpteeLib|ArmPkg/Library/OpteeLib/OpteeLib.inf
+  SecureBootVariableLib|SecurityPkg/Library/SecureBootVariableLib/SecureBootVariableLib.inf
+  SecureBootVariableProvisionLib|SecurityPkg/Library/SecureBootVariableProvisionLib/SecureBootVariableProvisionLib.inf
+  PlatformPKProtectionLib|SecurityPkg/Library/PlatformPKProtectionLibVarPolicy/PlatformPKProtectionLibVarPolicy.inf
+!endif
   UefiUsbLib|MdePkg/Library/UefiUsbLib/UefiUsbLib.inf
 
   BaseCryptLib|CryptoPkg/Library/BaseCryptLib/BaseCryptLib.inf
@@ -237,11 +243,7 @@
   # Architectural Protocols
   #
 !if $(SECURE_BOOT_ENABLE) == TRUE
-  ArmPkg/Drivers/MmCommunicationDxe/MmCommunication.inf {
-    <LibraryClasses>
-      NULL|StandaloneMmPkg/Library/VariableMmDependency/VariableMmDependency.inf
-      DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
-  }
+  ArmPkg/Drivers/MmCommunicationOpteeDxe/MmCommunication.inf
   MdeModulePkg/Universal/Variable/RuntimeDxe/VariableSmmRuntimeDxe.inf {
     <LibraryClasses>
       MmUnblockMemoryLib|MdePkg/Library/MmUnblockMemoryLib/MmUnblockMemoryLibNull.inf
