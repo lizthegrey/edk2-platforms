@@ -20,26 +20,48 @@
 [Packages]
   MdePkg/MdePkg.dec
   MdeModulePkg/MdeModulePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
   Silicon/NXP/NxpQoriqLs.dec
+  Silicon/NXP/Chassis/Chassis2/Chassis2.dec
 
 [LibraryClasses]
   DebugLib
   DevicePathLib
-  IoAccessLib
+  FdtLib
   MemoryAllocationLib
+  ItbParseLib
   PcdLib
   SocLib
+  UefiBootServicesTableLib
+  UefiLib
+  SocFixupLib
 
-[FeaturePcd]
-  gNxpQoriqLsTokenSpaceGuid.PcdPciLutBigEndian
+[Protocols]
+  gEfiPciIoProtocolGuid  ## CONSUMES ## PROTOCOL
+  gEdkiiNonDiscoverableDeviceProtocolGuid    ## CONSUMES ## PROTOCOL
+
+[Guids]
+  gFdtTableGuid
 
 [FixedPcd]
-  gNxpQoriqLsTokenSpaceGuid.PcdPciExp1BaseAddr
+  gNxpQoriqLsTokenSpaceGuid.PcdPcieStreamIdStart
+  gNxpQoriqLsTokenSpaceGuid.PcdPcieStreamIdEnd
+
+[Pcd]
+  gNxpQoriqLsTokenSpaceGuid.PcdPciLutBigEndian
   gNxpQoriqLsTokenSpaceGuid.PcdNumPciController
   gNxpQoriqLsTokenSpaceGuid.PcdPcieLutBase
   gNxpQoriqLsTokenSpaceGuid.PcdPcieLutDbg
-
-[Pcd]
-  gNxpQoriqLsTokenSpaceGuid.PcdPciCfgShiftEnable
+  gNxpQoriqLsTokenSpaceGuid.PcdPciDebug
+  gNxpQoriqLsTokenSpaceGuid.PcdPciExp1BaseAddr
+  gNxpQoriqLsTokenSpaceGuid.PcdPciExp2BaseAddr
+  gNxpQoriqLsTokenSpaceGuid.PcdPciExp3BaseAddr
+  gNxpQoriqLsTokenSpaceGuid.PcdPciExp4BaseAddr
+  gNxpQoriqLsTokenSpaceGuid.PcdPciExp5BaseAddr
+  gNxpQoriqLsTokenSpaceGuid.PcdPciExp6BaseAddr
+  gNxpQoriqLsTokenSpaceGuid.PcdPciFdtCompatible
   gNxpQoriqLsTokenSpaceGuid.PcdPciLsGen4Ctrl
+  gNxpQoriqLsTokenSpaceGuid.PcdIortTablePtr
+  gNxpQoriqLsTokenSpaceGuid.PcdPciCfgShiftEnable
+  gNxpQoriqLsTokenSpaceGuid.PcdPciStreamIdPerCtrl
   gNxpQoriqLsTokenSpaceGuid.PcdPciHideRootPort

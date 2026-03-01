@@ -1,8 +1,14 @@
 #  UsbHcd.inf
 #
-#  Copyright 2017, 2020 NXP
+#  Copyright 2017 NXP
 #
-#  SPDX-License-Identifier: BSD-2-Clause-Patent
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution. The full text of the license may be found
+#  http://opensource.org/licenses/bsd-license.php
+#
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 #
 #
 
@@ -16,11 +22,11 @@
 
 [Sources.common]
   UsbHcd.c
-  UsbHcd.h
 
 [Packages]
-  MdePkg/MdePkg.dec
+  EmbeddedPkg/EmbeddedPkg.dec
   MdeModulePkg/MdeModulePkg.dec
+  MdePkg/MdePkg.dec
   Silicon/NXP/NxpQoriqLs.dec
 
 [LibraryClasses]
@@ -28,10 +34,13 @@
   BaseMemoryLib
   DebugLib
   IoLib
+  FdtLib
   MemoryAllocationLib
   NonDiscoverableDeviceRegistrationLib
+  SocClockLib
   UefiBootServicesTableLib
   UefiDriverEntryPoint
+  UefiLib
 
 [FixedPcd]
   gNxpQoriqLsTokenSpaceGuid.PcdNumUsbController
@@ -39,7 +48,8 @@
   gNxpQoriqLsTokenSpaceGuid.PcdUsbSize
 
 [Guids]
-  gEfiEndOfDxeEventGroupGuid
+  gFdtTableGuid
 
 [Depex]
-  TRUE
+  gEdkiiPlatformHasDeviceTreeGuid
+ 

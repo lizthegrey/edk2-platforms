@@ -1,47 +1,56 @@
 /** @file
 
-  Copyright 2017, 2020 NXP
+  Copyright 2017 NXP
 
-  SPDX-License-Identifier: BSD-2-Clause-Patent
+  This program and the accompanying materials
+  are licensed and made available under the terms and conditions of the BSD License
+  which accompanies this distribution.  The full text of the license may be found at
+  http://opensource.org/licenses/bsd-license.php
+
+  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 
 **/
 
-#ifndef USB_HCD_H_
-#define USB_HCD_H_
-
-#include <Base.h>
+#ifndef __USB_HCD__
+#define __USB_HCD__
 
 /* Global constants */
 #define DWC3_GSNPSID_MASK                      0xffff0000
-#define DWC3_SYNOPSYS_ID                       0x55330000
+#define DWC3_SYNOPSIS_ID                       0x55330000
 #define DWC3_RELEASE_MASK                      0xffff
 #define DWC3_REG_OFFSET                        0xC100
 #define DWC3_RELEASE_190a                      0x190a
+#define DWC3_RELEASE_290a                      0x290a
 
 /* Global Configuration Register */
-#define DWC3_GCTL_U2RSTECN                     BIT16
-#define DWC3_GCTL_PRTCAPDIR(N)                 ((N) << 12)
+#define DWC3_GCTL_U2RSTECN                     BIT(16)
+#define DWC3_GCTL_PRTCAPDIR(n)                 ((n) << 12)
 #define DWC3_GCTL_PRTCAP_HOST                  1
 #define DWC3_GCTL_PRTCAP_OTG                   3
-#define DWC3_GCTL_CORESOFTRESET                BIT11
-#define DWC3_GCTL_SCALEDOWN(N)                 ((N) << 4)
+#define DWC3_GCTL_CORESOFTRESET                BIT(11)
+#define DWC3_GCTL_SCALEDOWN(n)                 ((n) << 4)
 #define DWC3_GCTL_SCALEDOWN_MASK               DWC3_GCTL_SCALEDOWN(3)
-#define DWC3_GCTL_DISSCRAMBLE                  BIT3
-#define DWC3_GCTL_DSBLCLKGTNG                  BIT0
+#define DWC3_GCTL_DISSCRAMBLE                  BIT(3)
+#define DWC3_GCTL_DSBLCLKGTNG                  BIT(0)
+
+/* Global User Control 1 Register */
+#define DWC3_GUCTL1_PARKMODE_DISABLE_SS        BIT(16)
+#define DWC3_GUCTL1_DEV_L1_EXIT_BY_HW          BIT(24)
 
 /* Global HWPARAMS1 Register */
-#define DWC3_GHWPARAMS1_EN_PWROPT(N)           (((N) & (3 << 24)) >> 24)
+#define DWC3_GHWPARAMS1_EN_PWROPT(n)           (((n) & (3 << 24)) >> 24)
 #define DWC3_GHWPARAMS1_EN_PWROPT_CLK          1
 
 /* Global USB2 PHY Configuration Register */
-#define DWC3_GUSB2PHYCFG_PHYSOFTRST            BIT31
+#define DWC3_GUSB2PHYCFG_PHYSOFTRST            BIT(31)
 
 /* Global USB3 PIPE Control Register */
-#define DWC3_GUSB3PIPECTL_PHYSOFTRST           BIT31
+#define DWC3_GUSB3PIPECTL_PHYSOFTRST           BIT(31)
 
 /* Global Frame Length Adjustment Register */
-#define GFLADJ_30MHZ_REG_SEL                   BIT7
-#define GFLADJ_30MHZ(N)                        ((N) & 0x3f)
+#define GFLADJ_30MHZ_REG_SEL                   BIT(7)
+#define GFLADJ_30MHZ(n)                        ((n) & 0x3f)
 #define GFLADJ_30MHZ_DEFAULT                   0x20
 
 /* Default to the FSL XHCI defines */
@@ -49,19 +58,30 @@
 #define USB3_ENABLE_BEAT_BURST_MASK            0xFF
 #define USB3_SET_BEAT_BURST_LIMIT              0xF00
 
+#define USB3_ENABLE_CACHE_SNOOP_MASK           0xffff0000
+#define AXI3_CACHE_TYPE_SNP                    0x2 /* cacheable */
+#define DWC3_GSBUSCFG0_DATARD_SHIFT            28
+#define DWC3_GSBUSCFG0_DESCRD_SHIFT            24
+#define DWC3_GSBUSCFG0_DATAWR_SHIFT            20
+#define DWC3_GSBUSCFG0_DESCWR_SHIFT            16
+#define USB3_ENABLE_CACHE_SNOOP     ((AXI3_CACHE_TYPE_SNP << DWC3_GSBUSCFG0_DATARD_SHIFT) | \
+                                     (AXI3_CACHE_TYPE_SNP << DWC3_GSBUSCFG0_DESCRD_SHIFT) | \
+                                     (AXI3_CACHE_TYPE_SNP << DWC3_GSBUSCFG0_DATAWR_SHIFT) | \
+                                     (AXI3_CACHE_TYPE_SNP << DWC3_GSBUSCFG0_DESCWR_SHIFT))
+
 typedef struct {
   UINT32 GEvntAdrLo;
   UINT32 GEvntAdrHi;
   UINT32 GEvntSiz;
   UINT32 GEvntCount;
-} G_EVENT_BUFFER;
+} GEventBuffer;
 
 typedef struct {
   UINT32 DDepCmdPar2;
   UINT32 DDepCmdPar1;
   UINT32 DDepCmdPar0;
   UINT32 DDepCmd;
-} D_PHYSICAL_EP;
+} DPhysicalEndpoint;
 
 typedef struct {
   UINT32 GSBusCfg0;
@@ -103,7 +123,7 @@ typedef struct {
   UINT32 GUsb3PipeCtl[16];
   UINT32 GTxFifoSiz[32];
   UINT32 GRxFifoSiz[32];
-  G_EVENT_BUFFER GEvntBuf[32];
+  GEventBuffer GEvntBuf[32];
   UINT32 GHwParams8;
   UINT32 Res4[11];
   UINT32 GFLAdj;
@@ -117,7 +137,7 @@ typedef struct {
   UINT32 Res6[2];
   UINT32 DAlepena;
   UINT32 Res7[55];
-  D_PHYSICAL_EP DPhyEpCmd[32];
+  DPhysicalEndpoint DPhyEpCmd[32];
   UINT32 Res8[128];
   UINT32 OCfg;
   UINT32 OCtl;
@@ -133,6 +153,6 @@ typedef struct {
   UINT32 Res10;
   UINT32 BcEvt;
   UINT32 BcEvten;
-} DWC3;
+} Dwc3;
 
 #endif

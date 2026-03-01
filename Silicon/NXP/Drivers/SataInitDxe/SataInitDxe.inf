@@ -3,14 +3,20 @@
 #
 #  Copyright 2017, 2020 NXP
 #
-#  SPDX-License-Identifier: BSD-2-Clause-Patent
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution. The full text of the license may be found
+#  http://opensource.org/licenses/bsd-license.php
+#
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 #
 ##
 
 [Defines]
   INF_VERSION                    = 0x0001001A
   BASE_NAME                      = SataInit
-  FILE_GUID                      = d1f98a9c-87d1-4322-8473-0ea3a91986f1
+  FILE_GUID                      = 021722D8-522B-4079-852A-FE44C2C13F49
   MODULE_TYPE                    = DXE_DRIVER
   VERSION_STRING                 = 1.0
   ENTRY_POINT                    = InitializeSataController
@@ -24,6 +30,7 @@
   Silicon/NXP/NxpQoriqLs.dec
 
 [LibraryClasses]
+  IoAccessLib
   DebugLib
   NonDiscoverableDeviceRegistrationLib
   UefiBootServicesTableLib
@@ -34,12 +41,9 @@
   gNxpQoriqLsTokenSpaceGuid.PcdNumSataController
   gNxpQoriqLsTokenSpaceGuid.PcdSataBaseAddr
   gNxpQoriqLsTokenSpaceGuid.PcdSataSize
-
-[FeaturePcd]
   gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA009185
-
-[Guids]
-  gEfiEndOfDxeEventGroupGuid
+  gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA010554
+  gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA010635
 
 [Depex]
   TRUE

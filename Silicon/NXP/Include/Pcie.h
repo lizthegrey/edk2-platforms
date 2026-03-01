@@ -22,6 +22,18 @@
 #define PCI_SEG0_MMIO_MEMBASE     FixedPcdGet64 (PcdPciExp1BaseAddr)
 #define PCI_SEG0_DBI_BASE         0x03400000
 
+// Per-segment MMIO and DBI bases for multi-RC support (LX2160A has 6 PCIe controllers)
+#define PCI_SEG1_MMIO_MEMBASE     FixedPcdGet64 (PcdPciExp2BaseAddr)
+#define PCI_SEG1_DBI_BASE         0x03500000
+#define PCI_SEG2_MMIO_MEMBASE     FixedPcdGet64 (PcdPciExp3BaseAddr)
+#define PCI_SEG2_DBI_BASE         0x03600000
+#define PCI_SEG3_MMIO_MEMBASE     FixedPcdGet64 (PcdPciExp4BaseAddr)
+#define PCI_SEG3_DBI_BASE         0x03700000
+#define PCI_SEG4_MMIO_MEMBASE     FixedPcdGet64 (PcdPciExp5BaseAddr)
+#define PCI_SEG4_DBI_BASE         0x03800000
+#define PCI_SEG5_MMIO_MEMBASE     FixedPcdGet64 (PcdPciExp6BaseAddr)
+#define PCI_SEG5_DBI_BASE         0x03900000
+
 #define PCI_LINK_DOWN             0x0
 #define PCI_LINK_UP               0x1
 
@@ -30,6 +42,8 @@
 #define PCI_SEG_BUSNUM_MAX        0xff
 #define PCI_SEG_PORTIO_MIN        0x0
 #define PCI_SEG_PORTIO_MAX        0xffff
+#define PCI_SEG_MMIO32_MIN        0x40000000UL
+#define PCI_SEG_MMIO32_MAX        0x4fffffffUL
 #define SEG_CFG_SIZE              0x00001000
 #define ECAM_DEVICE_SIZE          SIZE_32KB
 #define ECAM_BUS_SIZE             SIZE_1MB
@@ -72,10 +86,13 @@
 #define PCI_LUT_DBG               FixedPcdGet32 (PcdPcieLutDbg)
 #define PCI_LUT_BASE              FixedPcdGet32 (PcdPcieLutBase)
 #define LTSSM_PCIE_L0             0x11
+#define PCI_LINK_CAP              0x7c
+#define PCI_LINK_SPEED_MASK       0xf
 
 #define PCI_CLASS_BRIDGE_PCI      0x0604
 #define PCI_CLASS_DEVICE          0x8
 #define PCI_DBI_RO_WR_EN          0x8bc
+#define PCI_BASE_ADDRESS_0        0x10
 #define CLASS_CODE_MASK           0xffff
 #define CLASS_CODE_SHIFT          0x10
 
@@ -99,6 +116,12 @@
 #define IATU_REGION_CTRL_1_OFF_OUTBOUND_0_TYPE_CFG1  0x5
 #define IATU_REGION_INDEX0        0x0
 #define IATU_REGION_INDEX1        0x1
+#define IATU_REGION_INDEX2        0x2
+#define IATU_REGION_INDEX3        0x3
+#define IATU_REGION_INDEX4        0x4
+#define IATU_REGION_INDEX5        0x5
+#define IATU_REGION_INDEX6        0x6
+#define IATU_REGION_INDEX7        0x7
 #define SEG_CFG_BUS               0x00000000
 #define SEG_MEM_BUS               0x40000000
 #define SEG_IO_SIZE               0x10000
@@ -106,6 +129,7 @@
 
 #define CFG_SHIFT_ENABLE          (PcdGetBool (PcdPciCfgShiftEnable))
 #define PCI_LS_GEN4_CTRL          (PcdGetBool (PcdPciLsGen4Ctrl))
+#define PCI_STREAMID_PER_CTRL     (PcdGetBool (PcdPciStreamIdPerCtrl))
 
 // PCIe Layerscape Gen4 Controller
 #define GPEX_CLASSCODE                          0x474
@@ -130,6 +154,8 @@
 #define PAB_EXT_PEX_AMAP_AXI_WIN(Idx)           (0xb4a0 + 0x04 * (Idx))
 #define PAB_PEX_AMAP_PEX_WIN_L(Idx)             (0x4ba8 + 0x10 * (Idx))
 #define PAB_PEX_AMAP_PEX_WIN_H(Idx)             (0x4bac + 0x10 * (Idx))
+#define IB_TYPE_MEM_F                           0x2
+#define IB_TYPE_MEM_NF                          0x3
 #define PAB_CTRL                                0x808
 #define PAB_CTRL_APIO_EN                        0x1
 #define PAB_CTRL_PPIO_EN                        (0x1 << 1)
@@ -163,5 +189,26 @@
 #define GPEX_ACK_REPLAY_TO                      0x438
 #define ACK_LAT_TO_VAL_SHIFT                    0
 #define ACK_LAT_TO_VAL_MASK                     0x1fff
+
+// LX2160A PCIe config region size
+#define LX_PEX_CFG_SIZE                         0x00020000
+
+// CCSR link status registers
+#define PCIE_LINK_CTRL_STA                      0x5c
+#define PCIE_LINK_SPEED_SHIFT                   16
+#define PCIE_LINK_SPEED_MASK                    0x0f
+#define PCIE_LINK_WIDTH_SHIFT                   20
+#define PCIE_LINK_WIDTH_MASK                    0x3f
+
+// PF control registers
+#define PCIE_LTSSM_STA                          0x7fc
+
+// SoC-layer function declarations (implemented per-chassis)
+VOID GetSerdesProtocolMaps (UINT64 *);
+BOOLEAN IsSerDesLaneProtocolConfigured (UINT64, UINT16);
+VOID SocPcieCfgShift ();
+VOID SocGetPcieCtrl ();
+VOID SocGetStreamIdAllocationScheme ();
+VOID SocSetPciRootPort ();
 
 #endif

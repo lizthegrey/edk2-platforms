@@ -37,14 +37,80 @@ typedef enum {
 STATIC BOOLEAN CfgShiftEnable;
 STATIC BOOLEAN PciLsGen4Ctrl;
 
+/**
+  Select page among the 48 1KB pages for AXI access on Gen4 controllers.
+
+  @param[in]  Dbi    GPEX host controller address.
+  @param[in]  PgIdx  The page index to select.
+**/
+STATIC
+VOID
+CcsrSetPg (
+  IN EFI_PHYSICAL_ADDRESS Dbi,
+  IN UINT8                PgIdx
+  )
+{
+  UINTN Val;
+
+  Val = MmioRead32 ((UINTN)Dbi + PAB_CTRL);
+  Val &= ~(PAB_CTRL_PAGE_SEL_MASK << PAB_CTRL_PAGE_SEL_SHIFT);
+  Val |= (PgIdx & PAB_CTRL_PAGE_SEL_MASK) << PAB_CTRL_PAGE_SEL_SHIFT;
+  MmioWrite32 ((UINTN)Dbi + PAB_CTRL, Val);
+}
+
+/**
+  Paged 32-bit MMIO read for Gen4 controllers.
+  Handles page selection transparently based on offset.
+**/
+STATIC
+INTN
+CcsrRead32 (
+  IN EFI_PHYSICAL_ADDRESS Dbi,
+  IN UINT32               Offset
+  )
+{
+  if (Offset < INDIRECT_ADDR_BNDRY) {
+    CcsrSetPg (Dbi, 0);
+    return MmioRead32 (Dbi + Offset);
+  } else {
+    CcsrSetPg (Dbi, OFFSET_TO_PAGE_IDX (Offset));
+    return MmioRead32 (Dbi + OFFSET_TO_PAGE_ADDR (Offset));
+  }
+}
+
+/**
+  Paged 32-bit MMIO write for Gen4 controllers.
+  Handles page selection transparently based on offset.
+**/
+STATIC
+VOID
+CcsrWrite32 (
+  IN EFI_PHYSICAL_ADDRESS Dbi,
+  IN UINT32               Offset,
+  IN UINT32               Value
+  )
+{
+  if (Offset < INDIRECT_ADDR_BNDRY) {
+    CcsrSetPg (Dbi, 0);
+    MmioWrite32 ((UINTN)Dbi + Offset, Value);
+  } else {
+    CcsrSetPg (Dbi, OFFSET_TO_PAGE_IDX (Offset));
+    MmioWrite32 ((UINTN)Dbi + OFFSET_TO_PAGE_ADDR (Offset), Value);
+  }
+}
+
 STATIC
 VOID
 PciLsGen4SetBusMaster (
   IN EFI_PHYSICAL_ADDRESS   Dbi
   )
 {
-  PciLsGen4SetPg (Dbi, 0);
-  MmioOr32 (Dbi + PCI_COMMAND_OFFSET, EFI_PCI_COMMAND_BUS_MASTER);
+  UINT32 Val;
+
+  Val = CcsrRead32 ((UINTN)Dbi, PCI_COMMAND_OFFSET);
+  if (!(Val & EFI_PCI_COMMAND_BUS_MASTER)) {
+    CcsrWrite32 ((UINTN)Dbi, PCI_COMMAND_OFFSET, Val | EFI_PCI_COMMAND_BUS_MASTER);
+  }
 }
 
 STATIC
@@ -54,13 +120,8 @@ PcieCfgSetTarget (
   IN UINT32                 Target
   )
 {
-  STATIC_ASSERT (
-    PAB_AXI_AMAP_PEX_WIN_L(0) <= INDIRECT_ADDR_BNDRY,
-    "PcieCfgSetTarget() boundary check error");
-
-  PciLsGen4SetPg (Dbi, 0);
-  MmioWrite32 (Dbi + PAB_AXI_AMAP_PEX_WIN_L(0), Target);
-  MmioWrite32 (Dbi + PAB_AXI_AMAP_PEX_WIN_H(0), 0);
+  CcsrWrite32 ((UINTN)Dbi, PAB_AXI_AMAP_PEX_WIN_L(0), Target);
+  CcsrWrite32 ((UINTN)Dbi, PAB_AXI_AMAP_PEX_WIN_H(0), 0);
 }
 
 /**
@@ -85,23 +146,30 @@ PciLsGen4GetConfigBase (
   )
 {
   UINT32 Target;
+  UINT64 ConfigOffset;
 
   if (Bus > 0) {
     PciLsGen4SetBusMaster (PCI_SEG0_DBI_BASE + PCI_DBI_SIZE_DIFF * Segment);
 
-    Target = (((Address >> 20) & 0xFF) << 24) |
+    Target = ((((Address >> 20) & 0xFF) << 24) |
              (((Address >> 15) & 0x1F) << 19) |
-             (((Address >> 12) & 0x7) << 16);
+             (((Address >> 12) & 0x7) << 16));
+
+    // Try direct ECAM access first (fast path if iATU mapping is still active)
+    ConfigOffset = PCI_SEG0_MMIO_MEMBASE + PCI_BASE_DIFF * Segment + (Address & 0xFFFFF000);
+    if (MmioRead32 (ConfigOffset) != 0xFFFFFFFF) {
+      return ConfigOffset + Offset;
+    }
 
     PcieCfgSetTarget ((PCI_SEG0_DBI_BASE + PCI_DBI_SIZE_DIFF * Segment),
       Target);
     return PCI_SEG0_MMIO_MEMBASE + Offset + PCI_BASE_DIFF * Segment;
   } else {
       if (Offset < INDIRECT_ADDR_BNDRY) {
-        PciLsGen4SetPg (PCI_SEG0_DBI_BASE + PCI_DBI_SIZE_DIFF * Segment, 0);
+        CcsrSetPg (PCI_SEG0_DBI_BASE + PCI_DBI_SIZE_DIFF * Segment, 0);
         return (PCI_SEG0_DBI_BASE + PCI_DBI_SIZE_DIFF * Segment + Offset);
       }
-      PciLsGen4SetPg (PCI_SEG0_DBI_BASE + PCI_DBI_SIZE_DIFF * Segment,
+      CcsrSetPg (PCI_SEG0_DBI_BASE + PCI_DBI_SIZE_DIFF * Segment,
         OFFSET_TO_PAGE_IDX (Offset));
       Offset = OFFSET_TO_PAGE_ADDR (Offset);
       return (PCI_SEG0_DBI_BASE + PCI_DBI_SIZE_DIFF * Segment + Offset);

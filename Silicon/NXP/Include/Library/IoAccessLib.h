@@ -47,4 +47,25 @@ GetMmioOperations  (
   IN  BOOLEAN  Swap
   );
 
+/**
+  Compatibility macros for SolidRun modules that call the old SwapMmio*
+  API directly.  Upstream made these STATIC in IoAccessLib.c and removed
+  the public declarations; the canonical API is GetMmioOperations(TRUE).
+**/
+#define SwapMmioRead16(Address)                GetMmioOperations(TRUE)->Read16((Address))
+#define SwapMmioRead32(Address)                GetMmioOperations(TRUE)->Read32((Address))
+#define SwapMmioRead64(Address)                GetMmioOperations(TRUE)->Read64((Address))
+#define SwapMmioWrite16(Address, Value)        GetMmioOperations(TRUE)->Write16((Address), (Value))
+#define SwapMmioWrite32(Address, Value)        GetMmioOperations(TRUE)->Write32((Address), (Value))
+#define SwapMmioWrite64(Address, Value)        GetMmioOperations(TRUE)->Write64((Address), (Value))
+#define SwapMmioOr16(Address, OrData)          GetMmioOperations(TRUE)->Or16((Address), (OrData))
+#define SwapMmioOr32(Address, OrData)          GetMmioOperations(TRUE)->Or32((Address), (OrData))
+#define SwapMmioOr64(Address, OrData)          GetMmioOperations(TRUE)->Or64((Address), (OrData))
+#define SwapMmioAnd16(Address, AndData)        GetMmioOperations(TRUE)->And16((Address), (AndData))
+#define SwapMmioAnd32(Address, AndData)        GetMmioOperations(TRUE)->And32((Address), (AndData))
+#define SwapMmioAnd64(Address, AndData)        GetMmioOperations(TRUE)->And64((Address), (AndData))
+#define SwapMmioAndThenOr16(Address, And, Or)  GetMmioOperations(TRUE)->AndThenOr16((Address), (And), (Or))
+#define SwapMmioAndThenOr32(Address, And, Or)  GetMmioOperations(TRUE)->AndThenOr32((Address), (And), (Or))
+#define SwapMmioAndThenOr64(Address, And, Or)  GetMmioOperations(TRUE)->AndThenOr64((Address), (And), (Or))
+
 #endif /* IO_ACCESS_LIB_H_ */
