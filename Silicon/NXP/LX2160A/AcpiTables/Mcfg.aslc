@@ -1,0 +1,59 @@
+/** @file
+*  Memory Mapped Configuration Space Base Address Description Table (MCFG)
+*
+*  Copyright 2018-2019 NXP
+*
+*  SPDX-License-Identifier: BSD-2-Clause-Patent
+*
+**/
+
+#include <IndustryStandard/NxpMcfgTable.h>
+#include "Platform.h"
+
+NXP_EFI_PCI_EXPRESS_MEMORY_MAPPED_CONFIGURATION_SPACE_TABLE Mcfg= {
+  {
+      {
+        EFI_ACPI_6_1_PCI_EXPRESS_MEMORY_MAPPED_CONFIGURATION_SPACE_BASE_ADDRESS_DESCRIPTION_TABLE_SIGNATURE,
+        sizeof (NXP_EFI_PCI_EXPRESS_MEMORY_MAPPED_CONFIGURATION_SPACE_TABLE),
+        EFI_ACPI_MEMORY_MAPPED_CONFIGURATION_SPACE_ACCESS_TABLE_REVISION,
+        0x00,                                                     // Checksum will be updated at runtime
+        {EFI_ACPI_ARM_OEM_ID},
+        EFI_ACPI_ARM_OEM_TABLE_ID,
+        EFI_ACPI_ARM_OEM_REVISION,
+        EFI_ACPI_ARM_CREATOR_ID,
+        EFI_ACPI_ARM_CREATOR_REVISION
+      },
+      EFI_ACPI_RESERVED_QWORD,                                 //Reserved
+  },
+  {
+    {
+      LX2160A_PCI_SEG0_CONFIG_BASE,
+      LX2160A_PCI_SEG0,
+      LX2160A_PCI_SEG_BUSNUM_MIN,
+      LX2160A_PCI_SEG_BUSNUM_MAX,
+      EFI_ACPI_RESERVED_DWORD,
+    },
+    {
+      LX2160A_PCI_SEG1_CONFIG_BASE,
+      LX2160A_PCI_SEG1,
+      LX2160A_PCI_SEG_BUSNUM_MIN,
+      LX2160A_PCI_SEG_BUSNUM_MAX,
+      EFI_ACPI_RESERVED_DWORD,
+    },
+#if (BIFURCATE_PCIE)
+    {
+      LX2160A_PCI_SEG2_CONFIG_BASE,
+      LX2160A_PCI_SEG2,
+      LX2160A_PCI_SEG_BUSNUM_MIN,
+      LX2160A_PCI_SEG_BUSNUM_MAX,
+      EFI_ACPI_RESERVED_DWORD,
+    },
+#endif
+   },
+};
+
+//
+// Reference the table being generated to prevent the optimizer from removing the
+// data structure from the executable
+//
+VOID* CONST ReferenceAcpiTable = &Mcfg;
