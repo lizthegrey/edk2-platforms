@@ -49,7 +49,7 @@
 [LibraryClasses.common]
   TpmMeasurementLib|SecurityPkg/Library/DxeTpmMeasurementLib/DxeTpmMeasurementLib.inf
   ArmPlatformLib|Platform/SolidRun/LX2160aCex7/Library/PlatformLib/ArmPlatformLib.inf
-  ResetSystemLib|ArmPkg/Library/ArmSmcPsciResetSystemLib/ArmSmcPsciResetSystemLib.inf
+  ResetSystemLib|ArmPkg/Library/ArmPsciResetSystemLib/ArmPsciResetSystemLib.inf
   PL011UartLib|ArmPlatformPkg/Library/PL011UartLib/PL011UartLib.inf
   PL011UartClockLib|Silicon/NXP/Library/PL011UartClockLib/PL011UartClockLib.inf
   SerialPortLib|ArmPlatformPkg/Library/PL011SerialPortLib/PL011SerialPortLib.inf
@@ -179,7 +179,7 @@
   #
   # NV Storage PCDs.
   #
-  gArmTokenSpaceGuid.PcdVFPEnabled|1
+  # PcdVFPEnabled removed in edk2-stable202602
 
   #
   # PCI PCDs.
@@ -241,9 +241,8 @@
   # Architectural Protocols
   #
 !if $(SECURE_BOOT_ENABLE) == TRUE
-  ArmPkg/Drivers/MmCommunicationOpteeDxe/MmCommunication.inf {
+  ArmPkg/Drivers/MmCommunicationDxe/MmCommunication.inf {
     <LibraryClasses>
-      OpteeLib|ArmPkg/Library/OpteeLib/OpteeLib.inf
       NULL|StandaloneMmPkg/Library/VariableMmDependency/VariableMmDependency.inf
       DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
   }
@@ -305,12 +304,12 @@
 
   Silicon/NXP/Drivers/DtInitDxe/DtInitDxe.inf {
     <LibraryClasses>
-      FdtLib|EmbeddedPkg/Library/FdtLib/FdtLib.inf
+      FdtLib|MdePkg/Library/BaseFdtLib/BaseFdtLib.inf
       DtPlatformDtbLoaderLib|Silicon/NXP/Library/DtbLoaderLib/DtbLoaderLib.inf
   }
   EmbeddedPkg/Drivers/DtPlatformDxe/DtPlatformDxe.inf {
     <LibraryClasses>
-      FdtLib|EmbeddedPkg/Library/FdtLib/FdtLib.inf
+      FdtLib|MdePkg/Library/BaseFdtLib/BaseFdtLib.inf
       DtPlatformDtbLoaderLib|Silicon/NXP/Library/DtbLoaderLib/DtbLoaderLib.inf
   }
 

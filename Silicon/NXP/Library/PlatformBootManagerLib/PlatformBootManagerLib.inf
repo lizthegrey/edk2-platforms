@@ -34,7 +34,7 @@
   MdeModulePkg/MdeModulePkg.dec
   MdePkg/MdePkg.dec
   ShellPkg/ShellPkg.dec
-  OvmfPkg/OvmfPkg.dec
+  Silicon/NXP/NxpQoriqLs.dec
 
 [LibraryClasses]
   BaseLib
@@ -52,9 +52,6 @@
   UefiBootServicesTableLib
   UefiLib
   UefiRuntimeServicesTableLib
-
-[FeaturePcd]
-  gEfiMdePkgTokenSpaceGuid.PcdUgaConsumeSupport
 
 [FixedPcd]
   gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString

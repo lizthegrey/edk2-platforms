@@ -114,11 +114,11 @@ READ_LOCK_STATUS   = TRUE
   INF Silicon/NXP/Drivers/FlexSpiDxe/FspiDxe.inf
 
   INF MdeModulePkg/Core/RuntimeDxe/RuntimeDxe.inf
-  INF ArmPkg/Drivers/ArmGic/ArmGicDxe.inf
+  INF ArmPkg/Drivers/ArmGicDxe/ArmGicDxe.inf
   INF ArmPkg/Drivers/TimerDxe/TimerDxe.inf
   INF ArmPkg/Drivers/GenericWatchdogDxe/GenericWatchdogDxe.inf
 !if $(SECURE_BOOT_ENABLE) == TRUE
-  INF ArmPkg/Drivers/MmCommunicationOpteeDxe/MmCommunication.inf
+  INF ArmPkg/Drivers/MmCommunicationDxe/MmCommunication.inf
   INF MdeModulePkg/Universal/Variable/RuntimeDxe/VariableSmmRuntimeDxe.inf
   INF SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
 !else
@@ -288,7 +288,7 @@ READ_STATUS        = TRUE
 READ_LOCK_CAP      = TRUE
 READ_LOCK_STATUS   = TRUE
 
-  INF ArmPlatformPkg/PrePi/PeiUniCore.inf
+  INF ArmPlatformPkg/PeilessSec/PeilessSec.inf
 !if $(CAPSULE_ENABLE)
   INF RuleOverride = FMP_IMAGE_DESC Platform/SolidRun/LX2160aCex7/SystemFirmwareDescriptor/SystemFirmwareDescriptor.inf
 !endif

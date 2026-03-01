@@ -13,6 +13,11 @@
   .
   Include
   Chassis
+  # libfdt headers: libfdt.h and fdt.h live in BaseFdtLib/libfdt/libfdt.
+  # We provide our own Include/libfdt_env.h (found first via Include path order)
+  # to avoid pulling in BaseFdtLib's C standard library shim headers (string.h,
+  # stddef.h, etc.) which would shadow real headers and break non-FDT modules.
+  ../../../edk2/MdePkg/Library/BaseFdtLib/libfdt/libfdt
 
 [LibraryClasses]
   ##  @libraryclass  Provides enhancements to TimerLib. Uses standard TimerLib APIs.
@@ -28,6 +33,10 @@
 
 [Guids.common]
   gNxpQoriqLsTokenSpaceGuid      = {0x98657342, 0x4aee, 0x4fc6, {0xbc, 0xb5, 0xff, 0x45, 0xb7, 0xa8, 0x71, 0xf2}}
+
+  # Moved from OvmfPkg.dec to avoid pulling in OvmfPkg include paths that
+  # shadow NXP's AcpiPlatformLib.h with OvmfPkg's version.
+  gRootBridgesConnectedEventGroupGuid = {0x24a2d66f, 0xeedd, 0x4086, {0x90, 0x42, 0xf2, 0x6e, 0x47, 0x97, 0xee, 0x69}}
 
   gEfiQspiDriverGuid             = {0x889788dc, 0x5fde, 0x4dd8, {0xa7, 0x7d, 0x8f, 0xff, 0x11, 0x0d, 0x53, 0xd3}}
 

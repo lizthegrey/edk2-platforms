@@ -30,6 +30,7 @@
   MdeModulePkg/MdeModulePkg.dec
   ArmPkg/ArmPkg.dec
   ArmPlatformPkg/ArmPlatformPkg.dec
+  UefiCpuPkg/UefiCpuPkg.dec
   Silicon/NXP/NxpQoriqLs.dec
 
 [LibraryClasses]
