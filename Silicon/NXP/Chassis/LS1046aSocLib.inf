@@ -60,4 +60,6 @@
   gNxpQoriqLsTokenSpaceGuid.PcdNumGpioController
   gNxpQoriqLsTokenSpaceGuid.PcdGpioModuleBaseAddress
   gNxpQoriqLsTokenSpaceGuid.PcdGpioControllerOffset
+
+[FeaturePcd]
   gNxpQoriqLsTokenSpaceGuid.PcdGpioControllerBigEndian

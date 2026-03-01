@@ -184,12 +184,11 @@ ParseDeviceTree (
     QspiMasterPtr->AmbaBase = AmbaBase;
 
     // determine endianness automatically
-    if (MmioRead32 ( (UINTN)&QspiMasterPtr->Regs->Lutkey) == LUT_KEY) {
-      QspiMasterPtr->Read32 = MmioRead32;
-      QspiMasterPtr->Write32 = MmioWrite32;
-    } else {
-      QspiMasterPtr->Read32 = SwapMmioRead32;
-      QspiMasterPtr->Write32 = SwapMmioWrite32;
+    {
+      BOOLEAN Swap = (MmioRead32 ( (UINTN)&QspiMasterPtr->Regs->Lutkey) != LUT_KEY);
+      MMIO_OPERATIONS *Ops = GetMmioOperations (Swap);
+      QspiMasterPtr->Read32 = Ops->Read32;
+      QspiMasterPtr->Write32 = Ops->Write32;
     }
 
     Prop = fdt_getprop(Fdt, NodeOffset, "num-cs", &PropLen);

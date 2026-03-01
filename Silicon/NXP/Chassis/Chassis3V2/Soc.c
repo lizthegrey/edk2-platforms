@@ -181,7 +181,7 @@ GetSysInfo (
 **/
 VOID
 SocInit (
-  UINT32 ExternalITPolarity
+  VOID
   )
 {
   CHAR8        Buffer[0x100];
@@ -200,11 +200,6 @@ SocInit (
   // Setup bypass entry in SMMU for MC
   //
   SmmuSetupMCBypass (NXP_MC_LX2160A_STREAM_ID, 0);
-
-  //
-  // Early init i2c, needed to read Fpga register for Serial initialization.
-  //
-  I2cEarlyInitialize (I2cBase);
 
   //
   // Setup correct I2c bus frequency
@@ -256,10 +251,6 @@ SocInit (
   //
   PrintBoardPersonality ();
 
-  // AQR Polarity
-  if (ExternalITPolarity)
-    MmioWrite32 ((UINTN)(INT_SAMPLING_CTRL_BASE + IRQCR_OFFSET),
-                 ExternalITPolarity);
 }
 
 VOID

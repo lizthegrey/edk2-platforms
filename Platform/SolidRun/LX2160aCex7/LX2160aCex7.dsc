@@ -85,6 +85,7 @@
 !endif
 
 [PcdsFeatureFlag.common]
+  gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA009185|TRUE
   gEfiMdeModulePkgTokenSpaceGuid.PcdInstallAcpiSdtProtocol|TRUE
 !if $(SECURE_BOOT_ENABLE) == TRUE
   gEfiMdeModulePkgTokenSpaceGuid.PcdEnableVariableRuntimeCache|FALSE
@@ -193,11 +194,6 @@
   gNxpQoriqLsTokenSpaceGuid.PcdPcieExp4SysAddr|0x3700000
   gNxpQoriqLsTokenSpaceGuid.PcdPcieExp5SysAddr|0x3800000
   gNxpQoriqLsTokenSpaceGuid.PcdPcieExp6SysAddr|0x3900000
-
-  #
-  # SATA Pcds
-  #
-  gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA009185|TRUE
 
   #
   # DPAA2 Pcds

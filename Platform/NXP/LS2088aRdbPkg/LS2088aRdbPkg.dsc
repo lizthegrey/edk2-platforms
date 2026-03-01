@@ -51,6 +51,9 @@
   SecureMonRngLib|Silicon/NXP/Library/SecureMonRngLib/SecureMonRngLib.inf
   MemoryInitPeiLib|Silicon/NXP/Library/MemoryInitPei/MemoryInitPeiLib.inf
 
+[PcdsFeatureFlag.common]
+  gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA009185|TRUE
+
 [PcdsFixedAtBuild.common]
 
 !if $(MC_HIGH_MEM) == TRUE                                        # Management Complex loaded at the end of DDR2
@@ -108,11 +111,6 @@
   gNxpQoriqLsTokenSpaceGuid.PcdPcieLutBase|0x80000
   gNxpQoriqLsTokenSpaceGuid.PcdPcieLutDbg|0x407FC
 
-  #
-  # SATA Pcds
-  #
-  gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA009185|TRUE
-  
   #
   # DPAA2 Pcds
   #

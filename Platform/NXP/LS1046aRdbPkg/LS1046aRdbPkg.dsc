@@ -58,6 +58,7 @@
   Dpaa1BoardLib|Platform/NXP/LS1046aRdbPkg/Library/Dpaa1BoardLib/Dpaa1BoardLib.inf
 
 [PcdsFeatureFlag.common]
+  gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA009185|TRUE
   gEfiMdeModulePkgTokenSpaceGuid.PcdInstallAcpiSdtProtocol|TRUE
 
 [PcdsFixedAtBuild.common]
@@ -112,7 +113,6 @@
   #
   # SATA Pcds
   #
-  gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA009185|TRUE
   gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA010554|TRUE
   gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA010635|TRUE
 

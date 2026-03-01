@@ -200,7 +200,7 @@ STATIC VOID ErratumA009007 (
 **/
 VOID
 SocInit (
-  UINT32 ExternalITPolarity
+  VOID
   )
 {
   CHAR8 Buffer[0x100];

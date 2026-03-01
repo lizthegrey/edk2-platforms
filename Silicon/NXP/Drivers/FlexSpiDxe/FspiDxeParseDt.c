@@ -196,18 +196,14 @@ ParseDeviceTree (
     FspiMasterPtr->Regs = (FSPI_REGISTERS *)Regs;
     FspiMasterPtr->AmbaBase = AmbaBase;
 
-    if (fdt_getprop(Fdt, NodeOffset, "big-endian", NULL) != NULL) {
-      FspiMasterPtr->Read32 = SwapMmioRead32;
-      FspiMasterPtr->Write32 = SwapMmioWrite32;
-      FspiMasterPtr->Or32 = SwapMmioOr32;
-      FspiMasterPtr->And32 = SwapMmioAnd32;
-      FspiMasterPtr->AndThenOr32 = SwapMmioAndThenOr32;
-    } else {
-      FspiMasterPtr->Read32 = MmioRead32;
-      FspiMasterPtr->Write32 = MmioWrite32;
-      FspiMasterPtr->Or32 = MmioOr32;
-      FspiMasterPtr->And32 = MmioAnd32;
-      FspiMasterPtr->AndThenOr32 = MmioAndThenOr32;
+    {
+      BOOLEAN Swap = (fdt_getprop(Fdt, NodeOffset, "big-endian", NULL) != NULL);
+      MMIO_OPERATIONS *Ops = GetMmioOperations (Swap);
+      FspiMasterPtr->Read32 = Ops->Read32;
+      FspiMasterPtr->Write32 = Ops->Write32;
+      FspiMasterPtr->Or32 = Ops->Or32;
+      FspiMasterPtr->And32 = Ops->And32;
+      FspiMasterPtr->AndThenOr32 = Ops->AndThenOr32;
     }
 
     Prop = fdt_getprop(Fdt, NodeOffset, "num-cs", &PropLen);

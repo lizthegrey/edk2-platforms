@@ -19,11 +19,50 @@
 **/
 
 #include <Library/ArmPlatformLib.h>
+#include <Library/SocLib.h>
 #include <Ppi/ArmMpCoreInfo.h>
+#include <Ppi/NxpPlatformGetClock.h>
 #include <Library/PL011UartLib.h>
 #include <Library/PL011UartClockLib.h>
 
-extern VOID SocInit (UINT32 ExternITMask);
+/**
+  Get the clocks supplied by Platform to NXP SoC IPs
+
+  @param[in]  ClockType  Which IP clock to retrieve
+  @param[in]  ...        Variable args (controller number, etc.)
+
+  @return                Clock frequency in Hz, 0 if not available
+**/
+STATIC
+UINT64
+EFIAPI
+NxpPlatformGetClock (
+  IN  UINT32  ClockType,
+  ...
+  )
+{
+  UINT64   Clock;
+  VA_LIST  Args;
+
+  Clock = 0;
+  VA_START (Args, ClockType);
+
+  switch (ClockType) {
+  case NXP_SYSTEM_CLOCK:
+    Clock = 100 * 1000 * 1000; // 100 MHz
+    break;
+  case NXP_I2C_CLOCK:
+  case NXP_UART_CLOCK:
+    Clock = NxpPlatformGetClock (NXP_SYSTEM_CLOCK);
+    Clock = SocGetClock (Clock, ClockType, Args);
+    break;
+  default:
+    break;
+  }
+
+  VA_END (Args);
+  return Clock;
+}
 /**
   Return the current Boot Mode
 
@@ -86,7 +125,7 @@ ArmPlatformInitialize (
   IN  UINTN   MpId
   )
 {
-  SocInit (0);
+  SocInit ();
 
   if (FixedPcdGet64 (PcdSerialDbgRegisterBase) != 0) {
     SerialDebugPortInitialize ();
@@ -121,6 +160,7 @@ PrePeiCoreGetMpCoreInfo (
 }
 
 ARM_MP_CORE_INFO_PPI mMpCoreInfoPpi = { PrePeiCoreGetMpCoreInfo };
+NXP_PLATFORM_GET_CLOCK_PPI gPlatformGetClockPpi = { NxpPlatformGetClock };
 
 EFI_PEI_PPI_DESCRIPTOR      gPlatformPpiTable[] = {
   {

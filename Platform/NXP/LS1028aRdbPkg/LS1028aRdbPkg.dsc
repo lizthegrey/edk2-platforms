@@ -42,6 +42,9 @@
   SecureMonRngLib|Silicon/NXP/Library/SecureMonRngLib/SecureMonRngLib.inf
   MemoryInitPeiLib|Silicon/NXP/Library/MemoryInitPei/MemoryInitPeiLib.inf
 
+[PcdsFeatureFlag.common]
+  gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA009185|TRUE
+
 [PcdsFixedAtBuild.common]
 
   #
@@ -96,11 +99,6 @@
   #
   # Make VariableRuntimeDxe work at emulated non-volatile variable mode.
   #
-
-  #
-  # SATA Pcds
-  #
-  gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA009185|TRUE
 
   gNxpQoriqLsTokenSpaceGuid.PcdFdtAddress|0x20F00000
 

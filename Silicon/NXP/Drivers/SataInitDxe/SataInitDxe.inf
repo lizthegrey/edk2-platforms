@@ -41,9 +41,11 @@
   gNxpQoriqLsTokenSpaceGuid.PcdNumSataController
   gNxpQoriqLsTokenSpaceGuid.PcdSataBaseAddr
   gNxpQoriqLsTokenSpaceGuid.PcdSataSize
-  gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA009185
   gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA010554
   gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA010635
+
+[FeaturePcd]
+  gNxpQoriqLsTokenSpaceGuid.PcdSataErratumA009185
 
 [Depex]
   TRUE
