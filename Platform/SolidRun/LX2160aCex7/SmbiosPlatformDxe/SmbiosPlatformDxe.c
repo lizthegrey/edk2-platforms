@@ -115,7 +115,7 @@ STATIC CONST ARM_TYPE4 mArmDefaultType4_a72 = {
     3,                                       /* processor type CPU */
     ProcessorFamilyIndicatorFamily2,         /* processor family, acquire from field2 */
     2,                                       /* manufactuer */
-    {{0,},{0.}},                             /* processor id */
+    {0, 0, 0, 0},                            /* processor id */
     5,                                       /* version */
     {0,0,0,0,0,1},                           /* voltage */
     100,                                     /* external clock */
@@ -155,16 +155,16 @@ STATIC CONST ARM_TYPE7 mArmDefaultType7_a57_l1i = {
     1,
     0x280,                                 /* L1 enabled,
                                              varies with Memory Address */
-    0x0030,                                /* 48k i cache max */
-    0x0030,                                /* 48k installed */
+    {0x0030},                              /* 48k i cache max */
+    {0x0030},                              /* 48k installed */
     {0,1},                                 /* SRAM type */
     {0,1},                                 /* SRAM type */
     0,                                     /* unkown speed */
     CacheErrorParity,                      /* parity checking */
     CacheTypeInstruction, /* instruction cache */
     CacheAssociativityOther, /* three way */
-    0x400,                                /* 1 MB max L2  cache */
-    0x400,                                /* 1 MB installed L2 Cache */
+    {0x400},                              /* 1 MB max L2  cache (Size2) */
+    {0x400},                              /* 1 MB installed L2 Cache (Size2) */
   },
   TYPE7_STRINGS
 };

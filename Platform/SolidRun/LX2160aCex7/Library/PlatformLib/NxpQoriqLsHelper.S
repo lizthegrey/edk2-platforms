@@ -13,7 +13,7 @@
 #
 #**/
 
-#include <AsmMacroIoLibV8.h>
+#include <AsmMacroLib.h>
 #include <AutoGen.h>
 
 .text

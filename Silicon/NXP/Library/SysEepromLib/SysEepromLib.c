@@ -263,7 +263,7 @@ GetSocUniqueId (VOID)
   STATIC UINT32 SocUniqueId = 0;
 
   if (SocUniqueId == 0) {
-    SocUniqueId = NET_RANDOM (NetRandomInitSeed());
+    PseudoRandomU32 (&SocUniqueId);
   }
 
   return SocUniqueId;

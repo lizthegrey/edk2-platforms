@@ -50,7 +50,7 @@ typedef struct
 {
   EFI_ACPI_6_0_IO_REMAPPING_RMR_NODE          RmrNode;
   EFI_ACPI_6_0_IO_REMAPPING_ID_TABLE          RmrID[2];
-  EFI_ACPI_6_0_IO_REMAPPING_RMR_DESC          RmrDesc[4];
+  EFI_ACPI_6_0_IO_REMAPPING_MEM_RANGE_DESC    RmrDesc[4];
 } NXP_EFI_ACPI_6_0_IO_REMAPPING_RMR_NODE;
 
 typedef struct
