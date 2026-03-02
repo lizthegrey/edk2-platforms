@@ -141,6 +141,9 @@
   ## FFA conduit: SP runs at S-EL0 under OP-TEE, must use SVC not SMC
   gEfiMdeModulePkgTokenSpaceGuid.PcdFfaLibConduitSmc|FALSE
 
+  ## BFV is loaded into RAM by OP-TEE's stmm_sp.c, no shadow copy needed
+  gStandaloneMmPkgTokenSpaceGuid.PcdShadowBfv|FALSE
+
 [PcdsFeatureFlag]
   gNxpQoriqLsTokenSpaceGuid.PcdI2cErratumA009203|TRUE
 
