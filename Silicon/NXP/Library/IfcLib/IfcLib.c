@@ -40,7 +40,7 @@ IfcRead (
   UINT32 Value;
 
   if (FixedPcdGetBool (PcdIfcBigEndian)) {
-    Value = SwapMmioRead32 (Address);
+    Value = GetMmioOperations(TRUE)->Read32(Address);
   } else {
     Value = MmioRead32 (Address);
   }
@@ -64,7 +64,7 @@ IfcWrite (
   )
 {
   if (FixedPcdGetBool(PcdIfcBigEndian)) {
-    return SwapMmioWrite32 (Address, Value);
+    return GetMmioOperations(TRUE)->Write32(Address, Value);
   } else {
     return MmioWrite32 (Address, Value);
   }

@@ -37,7 +37,7 @@ WdogRead (
   )
 {
   if (FixedPcdGetBool (PcdWdogBigEndian)) {
-    return SwapMmioRead16 (Address);
+    return GetMmioOperations(TRUE)->Read16(Address);
   } else {
     return MmioRead16(Address);
   }
@@ -52,7 +52,7 @@ WdogWrite (
   )
 {
   if (FixedPcdGetBool (PcdWdogBigEndian)) {
-    return SwapMmioWrite16 (Address, Value);
+    return GetMmioOperations(TRUE)->Write16(Address, Value);
   } else {
     return MmioWrite16 (Address, Value);
   }
@@ -68,7 +68,7 @@ WdogAndThenOr (
   )
 {
   if (FixedPcdGetBool (PcdWdogBigEndian)) {
-    return SwapMmioAndThenOr16 (Address, And, Or);
+    return GetMmioOperations(TRUE)->AndThenOr16(Address, And, Or);
   } else {
     return MmioAndThenOr16 (Address, And, Or);
   }
@@ -83,7 +83,7 @@ WdogOr (
   )
 {
   if (FixedPcdGetBool (PcdWdogBigEndian)) {
-    return SwapMmioOr16 (Address, Or);
+    return GetMmioOperations(TRUE)->Or16(Address, Or);
   } else {
     return MmioOr16 (Address, Or);
   }

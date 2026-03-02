@@ -41,15 +41,15 @@ ErratumA009008 (
 
   Scfg = (VOID *)PcdGet64 (PcdScfgBaseAddr);
 
-  Value = SwapMmioRead32 ((UINTN)&Scfg->Usb1Prm1Cr);
+  Value = GetMmioOperations(TRUE)->Read32((UINTN)&Scfg->Usb1Prm1Cr);
   Value &= ~(0xF << 6);
-  SwapMmioWrite32 ((UINTN)&Scfg->Usb1Prm1Cr, Value|(USB_TXVREFTUNE << 6));
-  Value = SwapMmioRead32 ((UINTN)&Scfg->Usb2Prm1Cr);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->Usb1Prm1Cr, Value|(USB_TXVREFTUNE << 6));
+  Value = GetMmioOperations(TRUE)->Read32((UINTN)&Scfg->Usb2Prm1Cr);
   Value &= ~(0xF << 6);
-  SwapMmioWrite32 ((UINTN)&Scfg->Usb2Prm1Cr, Value|(USB_TXVREFTUNE << 6));
-  Value = SwapMmioRead32 ((UINTN)&Scfg->Usb3Prm1Cr);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->Usb2Prm1Cr, Value|(USB_TXVREFTUNE << 6));
+  Value = GetMmioOperations(TRUE)->Read32((UINTN)&Scfg->Usb3Prm1Cr);
   Value &= ~(0xF << 6);
-  SwapMmioWrite32 ((UINTN)&Scfg->Usb3Prm1Cr, Value|(USB_TXVREFTUNE << 6));
+  GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->Usb3Prm1Cr, Value|(USB_TXVREFTUNE << 6));
 
   return;
 }
@@ -72,12 +72,12 @@ ErratumA009798 (
 
   Scfg = (VOID *)PcdGet64 (PcdScfgBaseAddr);
 
-  Value = SwapMmioRead32 ((UINTN)&Scfg->Usb1Prm1Cr);
-  SwapMmioWrite32 ((UINTN)&Scfg->Usb1Prm1Cr, Value & USB_SQRXTUNE);
-  Value = SwapMmioRead32 ((UINTN)&Scfg->Usb2Prm1Cr);
-  SwapMmioWrite32 ((UINTN)&Scfg->Usb2Prm1Cr, Value & USB_SQRXTUNE);
-  Value = SwapMmioRead32 ((UINTN)&Scfg->Usb3Prm1Cr);
-  SwapMmioWrite32 ((UINTN)&Scfg->Usb3Prm1Cr, Value & USB_SQRXTUNE);
+  Value = GetMmioOperations(TRUE)->Read32((UINTN)&Scfg->Usb1Prm1Cr);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->Usb1Prm1Cr, Value & USB_SQRXTUNE);
+  Value = GetMmioOperations(TRUE)->Read32((UINTN)&Scfg->Usb2Prm1Cr);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->Usb2Prm1Cr, Value & USB_SQRXTUNE);
+  Value = GetMmioOperations(TRUE)->Read32((UINTN)&Scfg->Usb3Prm1Cr);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->Usb3Prm1Cr, Value & USB_SQRXTUNE);
 
   return;
 }
@@ -100,15 +100,15 @@ ErratumA008997 (
 
   Scfg = (VOID *)PcdGet64 (PcdScfgBaseAddr);
 
-  Value = SwapMmioRead32 ((UINTN)&Scfg->Usb1Prm2Cr);
+  Value = GetMmioOperations(TRUE)->Read32((UINTN)&Scfg->Usb1Prm2Cr);
   Value &= ~(0x7F << 9);
-  SwapMmioWrite32 ((UINTN)&Scfg->Usb1Prm2Cr, Value | (USB_PCSTXSWINGFULL << 9));
-  Value = SwapMmioRead32 ((UINTN)&Scfg->Usb2Prm2Cr);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->Usb1Prm2Cr, Value | (USB_PCSTXSWINGFULL << 9));
+  Value = GetMmioOperations(TRUE)->Read32((UINTN)&Scfg->Usb2Prm2Cr);
   Value &= ~(0x7F << 9);
-  SwapMmioWrite32 ((UINTN)&Scfg->Usb2Prm2Cr, Value | (USB_PCSTXSWINGFULL << 9));
-  Value = SwapMmioRead32 ((UINTN)&Scfg->Usb3Prm2Cr);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->Usb2Prm2Cr, Value | (USB_PCSTXSWINGFULL << 9));
+  Value = GetMmioOperations(TRUE)->Read32((UINTN)&Scfg->Usb3Prm2Cr);
   Value &= ~(0x7F << 9);
-  SwapMmioWrite32 ((UINTN)&Scfg->Usb3Prm2Cr, Value | (USB_PCSTXSWINGFULL << 9));
+  GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->Usb3Prm2Cr, Value | (USB_PCSTXSWINGFULL << 9));
 
   return;
 }

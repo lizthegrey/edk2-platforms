@@ -38,7 +38,7 @@ GurRead (
   )
 {
   if (FixedPcdGetBool (PcdGurBigEndian)) {
-    return SwapMmioRead32 (Address);
+    return GetMmioOperations(TRUE)->Read32(Address);
   } else {
     return MmioRead32 (Address);
   }
@@ -52,7 +52,7 @@ GurWrite (
   )
 {
   if (FixedPcdGetBool (PcdGurBigEndian)) {
-    SwapMmioWrite32 (Address, Value);
+    GetMmioOperations(TRUE)->Write32(Address, Value);
   } else {
     MmioWrite32 (Address, Value);
   }
@@ -361,7 +361,7 @@ PrintRCW (
                "Reset Configuration Word (RCW):");
   SerialPortWrite ((UINT8 *) Buffer, CharCount);
   for (Count = 0; Count < ARRAY_SIZE(Base->RcwSr); Count++) {
-    UINT32 Rcw = SwapMmioRead32((UINTN)&Base->RcwSr[Count]);
+    UINT32 Rcw = GetMmioOperations(TRUE)->Read32((UINTN)&Base->RcwSr[Count]);
 
     if ((Count % 4) == 0) {
       CharCount = AsciiSPrint (Buffer, sizeof (Buffer),

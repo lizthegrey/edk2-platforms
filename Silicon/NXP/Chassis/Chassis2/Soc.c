@@ -165,19 +165,19 @@ ConfigScfgMux (VOID)
   // LS1046A
   // USB3 is not used, configure mux to IIC4_SCL/IIC4_SDA
   if (PcdGetBool (PcdMuxToUsb3)) {
-    SwapMmioWrite32 ((UINTN)&Scfg->RcwPMuxCr0, CCSR_SCFG_RCWPMUXCRO_SELCR_USB);
+    GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->RcwPMuxCr0, CCSR_SCFG_RCWPMUXCRO_SELCR_USB);
   } else {
-    SwapMmioWrite32 ((UINTN)&Scfg->RcwPMuxCr0, CCSR_SCFG_RCWPMUXCRO_NOT_SELCR_USB);
+    GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->RcwPMuxCr0, CCSR_SCFG_RCWPMUXCRO_NOT_SELCR_USB);
   }
-  SwapMmioWrite32 ((UINTN)&Scfg->UsbDrvVBusSelCr, CCSR_SCFG_USBDRVVBUS_SELCR_USB1);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->UsbDrvVBusSelCr, CCSR_SCFG_USBDRVVBUS_SELCR_USB1);
   UsbPwrFault = (CCSR_SCFG_USBPWRFAULT_DEDICATED <<
                 CCSR_SCFG_USBPWRFAULT_USB3_SHIFT) |
                 (CCSR_SCFG_USBPWRFAULT_DEDICATED <<
                 CCSR_SCFG_USBPWRFAULT_USB2_SHIFT) |
                 (CCSR_SCFG_USBPWRFAULT_SHARED <<
                 CCSR_SCFG_USBPWRFAULT_USB1_SHIFT);
-  SwapMmioWrite32 ((UINTN)&Scfg->UsbPwrFaultSelCr, UsbPwrFault);
-  SwapMmioWrite32 ((UINTN)&Scfg->UsbPwrFaultSelCr, UsbPwrFault);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->UsbPwrFaultSelCr, UsbPwrFault);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->UsbPwrFaultSelCr, UsbPwrFault);
 }
 
 STATIC
@@ -191,7 +191,7 @@ ApplyErratums (
   Scfg = (VOID *)PcdGet64 (PcdScfgBaseAddr);
 
   /* Make SEC, SATA and USB reads and writes snoopable */
-  SwapMmioOr32((UINTN)&Scfg->SnpCnfgCr, CCSR_SCFG_SNPCNFGCR_SECRDSNP |
+  GetMmioOperations(TRUE)->Or32((UINTN)&Scfg->SnpCnfgCr, CCSR_SCFG_SNPCNFGCR_SECRDSNP |
     CCSR_SCFG_SNPCNFGCR_SECWRSNP | CCSR_SCFG_SNPCNFGCR_USB1RDSNP |
     CCSR_SCFG_SNPCNFGCR_USB1WRSNP | CCSR_SCFG_SNPCNFGCR_USB2RDSNP |
     CCSR_SCFG_SNPCNFGCR_USB2WRSNP | CCSR_SCFG_SNPCNFGCR_USB3RDSNP |
@@ -263,7 +263,7 @@ SocInit (
   ConfigScfgMux ();
 
   //Invert AQR105 IRQ pins interrupt polarity
-  SwapMmioWrite32 ((UINTN)&Scfg->IntpCr, PcdGet32 (PcdScfgIntPol));
+  GetMmioOperations(TRUE)->Write32((UINTN)&Scfg->IntpCr, PcdGet32 (PcdScfgIntPol));
 
 
   return;

@@ -417,7 +417,7 @@ PcieLinkState (
   // Reading PCIe controller LTSSM state
   //
   if (FeaturePcdGet (PcdPciLutBigEndian)) {
-    State = SwapMmioRead32 ((UINTN)Pcie + PCI_LUT_BASE + PCI_LUT_DBG) &
+    State = GetMmioOperations(TRUE)->Read32((UINTN)Pcie + PCI_LUT_BASE + PCI_LUT_DBG) &
             LtssmMask;
   } else {
    State = MmioRead32 ((UINTN)Pcie + PCI_LUT_BASE + PCI_LUT_DBG) &
@@ -881,8 +881,8 @@ PcieLutSetMapping (
 {
   /* leave mask as all zeroes, want to match all bits */
   if (FeaturePcdGet (PcdPciLutBigEndian)) {
-    SwapMmioWrite32 ((UINTN)&LsPcie->LsPcieLut->PexLut[Index].PexLudr, BusDevFuc << 16);
-    SwapMmioWrite32 ((UINTN)&LsPcie->LsPcieLut->PexLut[Index].PexLldr, StreamId | PCIE_LUT_ENABLE);
+    GetMmioOperations(TRUE)->Write32((UINTN)&LsPcie->LsPcieLut->PexLut[Index].PexLudr, BusDevFuc << 16);
+    GetMmioOperations(TRUE)->Write32((UINTN)&LsPcie->LsPcieLut->PexLut[Index].PexLldr, StreamId | PCIE_LUT_ENABLE);
   } else {
     MmioWrite32 ((UINTN)&LsPcie->LsPcieLut->PexLut[Index].PexLudr, BusDevFuc << 16);
     MmioWrite32 ((UINTN)&LsPcie->LsPcieLut->PexLut[Index].PexLldr, StreamId | PCIE_LUT_ENABLE);

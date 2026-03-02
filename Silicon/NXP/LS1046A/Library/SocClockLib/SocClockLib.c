@@ -78,7 +78,7 @@ SocGetClock (
       ReturnValue = ((UINT64)Rcw->SysPllRat * SysClkHz) >> 1;
       break;
     case IP_QSPI:
-      ConfigRegister = SwapMmioRead32 ( (UINTN)&Scfg->QspiCfg);
+      ConfigRegister = GetMmioOperations(TRUE)->Read32( (UINTN)&Scfg->QspiCfg);
       if (ConfigRegister & QSPI_CLOCK_DISABLE) {
         break;
       }

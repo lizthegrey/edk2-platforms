@@ -10,7 +10,6 @@
 
 #include <Base.h>
 #include <Library/BaseLib.h>
-#define IO_ACCESS_LIB_IMPLEMENTATION
 #include <Library/IoAccessLib.h>
 #include <Library/IoLib.h>
 

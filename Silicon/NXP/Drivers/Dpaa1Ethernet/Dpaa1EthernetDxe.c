@@ -1569,8 +1569,8 @@ InhibitPs (
   }
 
   for (Index = 0; Index < MaxPortals; Index++) {
-    SwapMmioWrite32 ((UINTN)PAddr, -1);
-    Value = SwapMmioRead32 ((UINTN)PAddr);
+    GetMmioOperations(TRUE)->Write32((UINTN)PAddr, -1);
+    Value = GetMmioOperations(TRUE)->Read32((UINTN)PAddr);
     if (!Value) {
       DEBUG ((DEBUG_ERROR, "Stopped after %d portals\n", Index));
       break;

@@ -174,8 +174,8 @@ GetCryptoEra (
   UINT32 Index;
 
   if (BigEndian) {
-    SecVidMs = SwapMmioRead32 (CryptoAddress + VIDMS_OFFSET);
-    CcbVid = SwapMmioRead32 (CryptoAddress + CCBVID_OFFSET);
+    SecVidMs = GetMmioOperations(TRUE)->Read32(CryptoAddress + VIDMS_OFFSET);
+    CcbVid = GetMmioOperations(TRUE)->Read32(CryptoAddress + CCBVID_OFFSET);
   } else {
     SecVidMs = MmioRead32 (CryptoAddress + VIDMS_OFFSET);
     CcbVid = MmioRead32 (CryptoAddress + CCBVID_OFFSET);
@@ -252,7 +252,7 @@ FdtFixupCrypto (
       return EFI_SUCCESS;
     }
 
-    CryptoBigEndian = !!(SwapMmioRead32 (CryptoAddress + SSTA_OFFSET) & (SSTA_PLEND | SSTA_ALT_PLEND));
+    CryptoBigEndian = !!(GetMmioOperations(TRUE)->Read32(CryptoAddress + SSTA_OFFSET) & (SSTA_PLEND | SSTA_ALT_PLEND));
     Era = GetCryptoEra (CryptoAddress, CryptoBigEndian);
 
     if (Era) {

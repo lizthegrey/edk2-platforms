@@ -35,7 +35,7 @@ MmcRead (
   )
 {
   if (FixedPcdGetBool (PcdMmcBigEndian)) {
-    return SwapMmioRead32(Address);
+    return GetMmioOperations(TRUE)->Read32(Address);
   } else {
     return MmioRead32 (Address);
   }
@@ -55,7 +55,7 @@ MmcWrite (
   )
 {
   if (FixedPcdGetBool (PcdMmcBigEndian)) {
-    return SwapMmioWrite32 (Address, Value);
+    return GetMmioOperations(TRUE)->Write32(Address, Value);
   } else {
     return MmioWrite32 (Address, Value);
   }
@@ -80,7 +80,7 @@ MmcAndThenOr (
   )
 {
   if (FixedPcdGetBool (PcdMmcBigEndian)) {
-    return SwapMmioAndThenOr32 (Address, AndData, OrData);
+    return GetMmioOperations(TRUE)->AndThenOr32(Address, AndData, OrData);
   } else {
     return MmioAndThenOr32 (Address, AndData, OrData);
   }
@@ -103,7 +103,7 @@ MmcOr (
   )
 {
   if (FixedPcdGetBool (PcdMmcBigEndian)) {
-    return SwapMmioOr32 (Address, OrData);
+    return GetMmioOperations(TRUE)->Or32(Address, OrData);
   } else {
     return MmioOr32 (Address, OrData);
   }
@@ -126,7 +126,7 @@ MmcAnd (
   )
 {
   if (FixedPcdGetBool (PcdMmcBigEndian)) {
-    return SwapMmioAnd32 (Address, AndData);
+    return GetMmioOperations(TRUE)->And32(Address, AndData);
   } else {
     return MmioAnd32 (Address, AndData);
   }

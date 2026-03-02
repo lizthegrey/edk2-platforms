@@ -70,31 +70,31 @@ DumpMac (
  )
 {
   DPAA1_DEBUG_MSG(" ======= DUMPING MAC REGISTERS ======= \n");
-  DPAA1_DEBUG_MSG(" CommandConfig    : 0x%x \n", SwapMmioRead32((UINTN)&regs->CommandConfig   ));
-  DPAA1_DEBUG_MSG(" MacAddr_0        : 0x%x \n", SwapMmioRead32((UINTN)&regs->MacAddr_0       ));
-  DPAA1_DEBUG_MSG(" MacAddr_1        : 0x%x \n", SwapMmioRead32((UINTN)&regs->MacAddr_1       ));
-  DPAA1_DEBUG_MSG(" Maxfrm            : 0x%x \n", SwapMmioRead32((UINTN)&regs->Maxfrm           ));
-  DPAA1_DEBUG_MSG(" RxFifo		   : 0x%x \n", SwapMmioRead32((UINTN)&regs->RxFifo		   ));
-  DPAA1_DEBUG_MSG(" TxFifo		   : 0x%x \n", SwapMmioRead32((UINTN)&regs->TxFifo		   ));
-  DPAA1_DEBUG_MSG(" HashtableCtrl    : 0x%x \n", SwapMmioRead32((UINTN)&regs->HashtableCtrl   ));
-  DPAA1_DEBUG_MSG(" Ievent            : 0x%x \n", SwapMmioRead32((UINTN)&regs->Ievent           ));
-  DPAA1_DEBUG_MSG(" TxIpgLength     : 0x%x \n", SwapMmioRead32((UINTN)&regs->TxIpgLength    ));
-  DPAA1_DEBUG_MSG(" Imask             : 0x%x \n", SwapMmioRead32((UINTN)&regs->Imask            ));
-  DPAA1_DEBUG_MSG(" RxPauseStatus   : 0x%x \n", SwapMmioRead32((UINTN)&regs->RxPauseStatus  ));
-  DPAA1_DEBUG_MSG(" LpwakeTimer      : 0x%x \n", SwapMmioRead32((UINTN)&regs->LpwakeTimer     ));
-  DPAA1_DEBUG_MSG(" SleepTimer       : 0x%x \n", SwapMmioRead32((UINTN)&regs->SleepTimer      ));
-  DPAA1_DEBUG_MSG(" StatnConfig      : 0x%x \n", SwapMmioRead32((UINTN)&regs->StatnConfig     ));
-  DPAA1_DEBUG_MSG(" ClPauseQuanta[0]: 0x%x \n", SwapMmioRead32((UINTN)&regs->ClPauseQuanta[0]));
-  DPAA1_DEBUG_MSG(" ClPauseQuanta[1]: 0x%x \n", SwapMmioRead32((UINTN)&regs->ClPauseQuanta[1]));
-  DPAA1_DEBUG_MSG(" ClPauseQuanta[2]: 0x%x \n", SwapMmioRead32((UINTN)&regs->ClPauseQuanta[2]));
-  DPAA1_DEBUG_MSG(" ClPauseQuanta[3]: 0x%x \n", SwapMmioRead32((UINTN)&regs->ClPauseQuanta[3]));
-  DPAA1_DEBUG_MSG(" ClPauseThresh[0]: 0x%x \n", SwapMmioRead32((UINTN)&regs->ClPauseThresh[0]));
-  DPAA1_DEBUG_MSG(" ClPauseThresh[1]: 0x%x \n", SwapMmioRead32((UINTN)&regs->ClPauseThresh[1]));
-  DPAA1_DEBUG_MSG(" ClPauseThresh[2]: 0x%x \n", SwapMmioRead32((UINTN)&regs->ClPauseThresh[2]));
-  DPAA1_DEBUG_MSG(" ClPauseThresh[3]: 0x%x \n", SwapMmioRead32((UINTN)&regs->ClPauseThresh[3]));
+  DPAA1_DEBUG_MSG(" CommandConfig    : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->CommandConfig   ));
+  DPAA1_DEBUG_MSG(" MacAddr_0        : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->MacAddr_0       ));
+  DPAA1_DEBUG_MSG(" MacAddr_1        : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->MacAddr_1       ));
+  DPAA1_DEBUG_MSG(" Maxfrm            : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->Maxfrm           ));
+  DPAA1_DEBUG_MSG(" RxFifo		   : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->RxFifo		   ));
+  DPAA1_DEBUG_MSG(" TxFifo		   : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->TxFifo		   ));
+  DPAA1_DEBUG_MSG(" HashtableCtrl    : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->HashtableCtrl   ));
+  DPAA1_DEBUG_MSG(" Ievent            : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->Ievent           ));
+  DPAA1_DEBUG_MSG(" TxIpgLength     : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->TxIpgLength    ));
+  DPAA1_DEBUG_MSG(" Imask             : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->Imask            ));
+  DPAA1_DEBUG_MSG(" RxPauseStatus   : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->RxPauseStatus  ));
+  DPAA1_DEBUG_MSG(" LpwakeTimer      : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->LpwakeTimer     ));
+  DPAA1_DEBUG_MSG(" SleepTimer       : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->SleepTimer      ));
+  DPAA1_DEBUG_MSG(" StatnConfig      : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->StatnConfig     ));
+  DPAA1_DEBUG_MSG(" ClPauseQuanta[0]: 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->ClPauseQuanta[0]));
+  DPAA1_DEBUG_MSG(" ClPauseQuanta[1]: 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->ClPauseQuanta[1]));
+  DPAA1_DEBUG_MSG(" ClPauseQuanta[2]: 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->ClPauseQuanta[2]));
+  DPAA1_DEBUG_MSG(" ClPauseQuanta[3]: 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->ClPauseQuanta[3]));
+  DPAA1_DEBUG_MSG(" ClPauseThresh[0]: 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->ClPauseThresh[0]));
+  DPAA1_DEBUG_MSG(" ClPauseThresh[1]: 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->ClPauseThresh[1]));
+  DPAA1_DEBUG_MSG(" ClPauseThresh[2]: 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->ClPauseThresh[2]));
+  DPAA1_DEBUG_MSG(" ClPauseThresh[3]: 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->ClPauseThresh[3]));
 
-  DPAA1_DEBUG_MSG(" IfMode		   : 0x%x \n", SwapMmioRead32((UINTN)&regs->IfMode           ));
-  DPAA1_DEBUG_MSG(" IfStatus	   : 0x%x \n", SwapMmioRead32((UINTN)&regs->IfStatus         ));
+  DPAA1_DEBUG_MSG(" IfMode		   : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->IfMode           ));
+  DPAA1_DEBUG_MSG(" IfStatus	   : 0x%x \n", GetMmioOperations(TRUE)->Read32((UINTN)&regs->IfStatus         ));
 }
 
 VOID
@@ -107,59 +107,59 @@ DumpMacStats (
   DPAA1_DEBUG_MSG(" ------------- DUMPING RX STATISTICS -------------\n");
 
   DPAA1_DEBUG_MSG(" RxAlignErrL %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxAlignErrL));      	/* Rx alignment error lower */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxAlignErrL));      	/* Rx alignment error lower */
   DPAA1_DEBUG_MSG(" RxAlignErrU %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxAlignErrU));      	/* Rx alignment error upper */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxAlignErrU));      	/* Rx alignment error upper */
   DPAA1_DEBUG_MSG(" RxFrameL %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxFrameL));   		/* Rx frame counter lower */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxFrameL));   		/* Rx frame counter lower */
   DPAA1_DEBUG_MSG(" RxFrameU %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxFrameU));   		/* Rx frame counter upper */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxFrameU));   		/* Rx frame counter upper */
   DPAA1_DEBUG_MSG(" RxFrameCrcErrL %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxFrameCrcErrL)); 	/* Rx frame check sequence error lower */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxFrameCrcErrL)); 	/* Rx frame check sequence error lower */
   DPAA1_DEBUG_MSG(" RxFrameCrcErrU %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxFrameCrcErrU)); 	/* Rx frame check sequence error upper */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxFrameCrcErrU)); 	/* Rx frame check sequence error upper */
   DPAA1_DEBUG_MSG(" RxErrL %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxErrL));     /* Rx frame error lower */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxErrL));     /* Rx frame error lower */
   DPAA1_DEBUG_MSG(" RxErrU %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxErrU));     /* Rx frame error upper */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxErrU));     /* Rx frame error upper */
   DPAA1_DEBUG_MSG(" RxDropL %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxDropL));    /* Rx dropped packets lower */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxDropL));    /* Rx dropped packets lower */
   DPAA1_DEBUG_MSG(" RxDropU %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxDropU));    /* Rx dropped packets upper */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxDropU));    /* Rx dropped packets upper */
   DPAA1_DEBUG_MSG(" RxPktL %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxPktL));     /* Rx packets lower */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxPktL));     /* Rx packets lower */
   DPAA1_DEBUG_MSG(" RxPktU %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxPktU));     /* Rx packets upper */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxPktU));     /* Rx packets upper */
   DPAA1_DEBUG_MSG(" RxUndszL %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxUndszL));   /* Rx undersized packet lower */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxUndszL));   /* Rx undersized packet lower */
   DPAA1_DEBUG_MSG(" RxUndszU %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxUndszU));   /* Rx undersized packet upper */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxUndszU));   /* Rx undersized packet upper */
   DPAA1_DEBUG_MSG(" RxOverszL %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxOverszL));  /* Rx oversized packet lower */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxOverszL));  /* Rx oversized packet lower */
   DPAA1_DEBUG_MSG(" RxOverszU %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxOverszU));  /* Rx oversized packet upper */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxOverszU));  /* Rx oversized packet upper */
   DPAA1_DEBUG_MSG(" RxJabberL %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxJabberL));  /* Rx Jabber packet lower */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxJabberL));  /* Rx Jabber packet lower */
   DPAA1_DEBUG_MSG(" RxJabberU %d \n", 
-	SwapMmioRead32((UINTN)&Regs->RxJabberU));  /* Rx Jabber packet upper */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->RxJabberU));  /* Rx Jabber packet upper */
 
   DPAA1_DEBUG_MSG(" ------------- DUMPING TX STATISTICS -------------\n");
   DPAA1_DEBUG_MSG(" TxFrameL %d \n", 
-	SwapMmioRead32((UINTN)&Regs->TxFrameL));   /* Tx frame counter lower */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->TxFrameL));   /* Tx frame counter lower */
   DPAA1_DEBUG_MSG(" TxFrameU %d \n", 
-	SwapMmioRead32((UINTN)&Regs->TxFrameU));   /* Tx frame counter upper */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->TxFrameU));   /* Tx frame counter upper */
   DPAA1_DEBUG_MSG(" TxFrameCrcErrL %d \n", 
-	SwapMmioRead32((UINTN)&Regs->TxFrameCrcErrL)); /* Tx frame check sequence error lower */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->TxFrameCrcErrL)); /* Tx frame check sequence error lower */
   DPAA1_DEBUG_MSG(" TxFrameCrcErrU %d \n", 
-	SwapMmioRead32((UINTN)&Regs->TxFrameCrcErrU)); /* Tx frame check sequence error upper */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->TxFrameCrcErrU)); /* Tx frame check sequence error upper */
   DPAA1_DEBUG_MSG(" TxFrameErrL %d \n", 
-	SwapMmioRead32((UINTN)&Regs->TxFrameErrL));      /* Tx frame error lower */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->TxFrameErrL));      /* Tx frame error lower */
   DPAA1_DEBUG_MSG(" TxFrameErrU %d \n", 
-	SwapMmioRead32((UINTN)&Regs->TxFrameErrU));      /* Tx frame error upper */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->TxFrameErrU));      /* Tx frame error upper */
   DPAA1_DEBUG_MSG(" TxUndszL %d \n", 
-	SwapMmioRead32((UINTN)&Regs->TxUndszL));   /* Tx undersized packet lower */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->TxUndszL));   /* Tx undersized packet lower */
   DPAA1_DEBUG_MSG(" TxUndszU %d \n", 
-	SwapMmioRead32((UINTN)&Regs->TxUndszU));   /* Tx undersized packet upper */
+	GetMmioOperations(TRUE)->Read32((UINTN)&Regs->TxUndszU));   /* Tx undersized packet upper */
 }
 
 /**
@@ -323,16 +323,16 @@ VOID InitializeMac (
   Memac *Regs = Mac->Base;
 
   /* mask all interrupt */
-  SwapMmioWrite32((UINTN)&Regs->Imask, IMASK_MASK_ALL);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Regs->Imask, IMASK_MASK_ALL);
 
   /* clear all events */
-  SwapMmioWrite32((UINTN)&Regs->Ievent, IEVENT_CLEAR_ALL);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Regs->Ievent, IEVENT_CLEAR_ALL);
 
   /* set the max receive length */
-  SwapMmioWrite32((UINTN)&Regs->Maxfrm, MEMAC_MAXFRM & MAXFRM_MASK);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Regs->Maxfrm, MEMAC_MAXFRM & MAXFRM_MASK);
 
   /* multicast frame reception for the hash entry disable */
-  SwapMmioWrite32((UINTN)&Regs->HashtableCtrl, 0);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Regs->HashtableCtrl, 0);
 }
 
 VOID SetInterface (
@@ -345,8 +345,8 @@ VOID SetInterface (
   UINT32 Mode, Status;
 
   /* clear all bits relative with interface mode */
-  Mode = SwapMmioRead32((UINTN)&Regs->IfMode);
-  Status = SwapMmioRead32((UINTN)&Regs->IfStatus);
+  Mode = GetMmioOperations(TRUE)->Read32((UINTN)&Regs->IfMode);
+  Status = GetMmioOperations(TRUE)->Read32((UINTN)&Regs->IfStatus);
 
   switch (Type) {
   case PHY_INTERFACE_SGMII:
@@ -387,8 +387,8 @@ VOID SetInterface (
   DPAA1_DEBUG_MSG(" IfMode = %x\n",Mode);
   DPAA1_DEBUG_MSG(" IfStatus = %x\n", Status);
 
-  SwapMmioWrite32((UINTN)&Regs->IfMode, Mode);
-  Status = SwapMmioRead32((UINTN)&Regs->IfStatus);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Regs->IfMode, Mode);
+  Status = GetMmioOperations(TRUE)->Read32((UINTN)&Regs->IfStatus);
 
   return;
 }
@@ -402,7 +402,7 @@ TxGracefulStopEnable (
 
   Pram = FmanEthDevice->TxPram;
   /* Enable graceful stop for TX */
-  SwapMmioOr32((UINTN)&Pram->Mode, PARAM_MODE_GRACEFUL_STOP);
+  GetMmioOperations(TRUE)->Or32((UINTN)&Pram->Mode, PARAM_MODE_GRACEFUL_STOP);
   MemoryFence();
 }
 
@@ -415,7 +415,7 @@ TxGracefulStopDisable (
 
   Pram = FmanEthDevice->TxPram;
   /* re-enable transmission of frames */
-  SwapMmioAnd32((UINTN)&Pram->Mode, ~PARAM_MODE_GRACEFUL_STOP);
+  GetMmioOperations(TRUE)->And32((UINTN)&Pram->Mode, ~PARAM_MODE_GRACEFUL_STOP);
   MemoryFence();
 }
 
@@ -426,8 +426,8 @@ DisableMac (
 {
   Memac *Regs = Mac->Base;
 
-  SwapMmioAnd32((UINTN)&Regs->CommandConfig, ~MEMAC_CMD_CFG_RXTX_EN);
-  SwapMmioOr32((UINTN)&Regs->CommandConfig, MEMAC_CMD_CFG_SWR);
+  GetMmioOperations(TRUE)->And32((UINTN)&Regs->CommandConfig, ~MEMAC_CMD_CFG_RXTX_EN);
+  GetMmioOperations(TRUE)->Or32((UINTN)&Regs->CommandConfig, MEMAC_CMD_CFG_SWR);
 }
 
 VOID
@@ -437,11 +437,11 @@ EnableMac (
 {
   Memac *Regs = Mac->Base;
 
-  SwapMmioOr32((UINTN)&Regs->CommandConfig, MEMAC_CMD_CFG_SWR);
-  SwapMmioOr32((UINTN)&Regs->StatnConfig, MEMAC_CMD_CFG_CLR_STATS);
-  SwapMmioOr32((UINTN)&Regs->CommandConfig,
+  GetMmioOperations(TRUE)->Or32((UINTN)&Regs->CommandConfig, MEMAC_CMD_CFG_SWR);
+  GetMmioOperations(TRUE)->Or32((UINTN)&Regs->StatnConfig, MEMAC_CMD_CFG_CLR_STATS);
+  GetMmioOperations(TRUE)->Or32((UINTN)&Regs->CommandConfig,
       MEMAC_CMD_CFG_RXTX_EN | MEMAC_CMD_CFG_PAD );
-  SwapMmioAnd32((UINTN)&Regs->CommandConfig, ~MEMAC_CMD_CFG_NO_LEN_CHK);
+  GetMmioOperations(TRUE)->And32((UINTN)&Regs->CommandConfig, ~MEMAC_CMD_CFG_NO_LEN_CHK);
 }
 
 VOID
@@ -452,10 +452,10 @@ DisablePorts (
   UINT32 Timeout = 1000000;
 
   /* disable bmi Tx port */
-  SwapMmioAnd32((UINTN)&FmanEthDevice->TxPort->FmanBmTcfg, ~FMAN_BM_TCFG_EN);
+  GetMmioOperations(TRUE)->And32((UINTN)&FmanEthDevice->TxPort->FmanBmTcfg, ~FMAN_BM_TCFG_EN);
 
   /* wait until the tx port is not busy */
-  while ((SwapMmioRead32((UINTN)&FmanEthDevice->TxPort->FmanBmTst) & FMAN_BM_TST_BSY)
+  while ((GetMmioOperations(TRUE)->Read32((UINTN)&FmanEthDevice->TxPort->FmanBmTst) & FMAN_BM_TST_BSY)
 		 && Timeout--)
               ;
 
@@ -465,10 +465,10 @@ DisablePorts (
   /* disable bmi Rx port */
   Timeout = 1000000;
 
-  SwapMmioAnd32((UINTN)&FmanEthDevice->RxPort->FmanBmRcfg, ~FMAN_BM_RCFG_EN);
+  GetMmioOperations(TRUE)->And32((UINTN)&FmanEthDevice->RxPort->FmanBmRcfg, ~FMAN_BM_RCFG_EN);
 
   /* wait until the rx port is not busy */
-  while ((SwapMmioRead32((UINTN)&FmanEthDevice->RxPort->FmanBmRst) & FMAN_BM_RST_BSY)
+  while ((GetMmioOperations(TRUE)->Read32((UINTN)&FmanEthDevice->RxPort->FmanBmRst) & FMAN_BM_RST_BSY)
 		 && Timeout--)
          ;
 }
@@ -479,11 +479,11 @@ EnablePorts (
   )
 {
   /* enable bmi Rx port */
-  SwapMmioOr32((UINTN)&FmanEthDevice->RxPort->FmanBmRcfg, FMAN_BM_RCFG_EN);
+  GetMmioOperations(TRUE)->Or32((UINTN)&FmanEthDevice->RxPort->FmanBmRcfg, FMAN_BM_RCFG_EN);
   /* enable MAC rx/tx port */
   EnableMac(FmanEthDevice->Mac);
   /* enable bmi Tx port */
-  SwapMmioOr32((UINTN)&FmanEthDevice->TxPort->FmanBmTcfg, FMAN_BM_TCFG_EN);
+  GetMmioOperations(TRUE)->Or32((UINTN)&FmanEthDevice->TxPort->FmanBmTcfg, FMAN_BM_TCFG_EN);
 }
 
 VOID
@@ -502,8 +502,8 @@ SetMacAddr (
    */
   Addr0 = (MAddr.Addr[3] << 24) | (MAddr.Addr[2] << 16) | \
                 (MAddr.Addr[1] << 8)  | (MAddr.Addr[0]);
-  SwapMmioWrite32((UINTN)&Regs->MacAddr_0, Addr0);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Regs->MacAddr_0, Addr0);
 
   Addr1 = ((MAddr.Addr[5] << 8) | MAddr.Addr[4]) & 0x0000ffff;
-  SwapMmioWrite32((UINTN)&Regs->MacAddr_1, Addr1);
+  GetMmioOperations(TRUE)->Write32((UINTN)&Regs->MacAddr_1, Addr1);
 }

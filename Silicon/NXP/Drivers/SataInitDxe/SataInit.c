@@ -59,7 +59,7 @@ InitializeSataController (
   // Workaround : write value 0x80104e20 to 0x1eb1300 (serdes 2)
   //
   if (PcdGetBool (PcdSataErratumA010554)) {
-    SwapMmioWrite32 ((UINTN)SERDES2_SATA_ERRATA, 0x80104e20);
+    GetMmioOperations(TRUE)->Write32((UINTN)SERDES2_SATA_ERRATA, 0x80104e20);
   }
 
   //
@@ -67,7 +67,7 @@ InitializeSataController (
   // Workaround : write 0x80000000 to the address 0x20140520 (dcsr).
   //
   if (PcdGetBool (PcdSataErratumA010635)) {
-    SwapMmioWrite32 ((UINTN)DCSR_SATA_ERRATA, 0x80000000);
+    GetMmioOperations(TRUE)->Write32((UINTN)DCSR_SATA_ERRATA, 0x80000000);
   }
 
   while (NumSataController) {
