@@ -138,6 +138,9 @@
   gNxpQoriqLsTokenSpaceGuid.PcdI2cSpeed|400000
   gNxpQoriqLsTokenSpaceGuid.PcdI2cSlaveAddress|0x51
 
+  ## FFA conduit: SP runs at S-EL0 under OP-TEE, must use SVC not SMC
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFfaLibConduitSmc|FALSE
+
 [PcdsFeatureFlag]
   gNxpQoriqLsTokenSpaceGuid.PcdI2cErratumA009203|TRUE
 
