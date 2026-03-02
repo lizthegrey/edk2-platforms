@@ -243,7 +243,10 @@
   # Architectural Protocols
   #
 !if $(SECURE_BOOT_ENABLE) == TRUE
-  ArmPkg/Drivers/MmCommunicationOpteeDxe/MmCommunication.inf
+  ArmPkg/Drivers/MmCommunicationOpteeDxe/MmCommunication.inf {
+    <LibraryClasses>
+      NULL|StandaloneMmPkg/Library/VariableMmDependency/VariableMmDependency.inf
+  }
   MdeModulePkg/Universal/Variable/RuntimeDxe/VariableSmmRuntimeDxe.inf {
     <LibraryClasses>
       MmUnblockMemoryLib|MdePkg/Library/MmUnblockMemoryLib/MmUnblockMemoryLibNull.inf
