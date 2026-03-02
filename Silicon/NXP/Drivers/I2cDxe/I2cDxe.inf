@@ -3,9 +3,15 @@
 #  Component description file for I2c driver
 #
 #  Copyright (c) 2015, Freescale Semiconductor, Inc. All rights reserved.
-#  Copyright 2017-2020 NXP
+#  Copyright 2017, 2020 NXP
 #
-#  SPDX-License-Identifier: BSD-2-Clause-Patent
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution. The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.php
+#
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 #
 #
 
@@ -19,27 +25,22 @@
   UNLOAD                         = I2cDxeUnload
 
 [Sources.common]
-  ComponentName.c
-  DriverBinding.c
   I2cDxe.c
 
 [LibraryClasses]
   ArmLib
-  ArmPlatformLib
   BaseMemoryLib
-  DevicePathLib
+  DxeServicesTableLib
   I2cLib
   IoLib
+  SocClockLib
   MemoryAllocationLib
   PcdLib
   TimerLib
-  UefiBootServicesTableLib
   UefiDriverEntryPoint
+  UefiBootServicesTableLib
   UefiLib
   UefiRuntimeLib
-
-[Guids]
-  gNxpNonDiscoverableI2cMasterGuid
 
 [Packages]
   MdeModulePkg/MdeModulePkg.dec
@@ -47,8 +48,17 @@
   Silicon/NXP/NxpQoriqLs.dec
 
 [Protocols]
-  gEdkiiNonDiscoverableDeviceProtocolGuid    ## TO_START
-  gEfiI2cMasterProtocolGuid                  ## BY_START
+  gEfiI2cMasterProtocolGuid
 
-[Depex]
-  TRUE
+[Pcd]
+  gNxpQoriqLsTokenSpaceGuid.PcdI2cBus
+  gNxpQoriqLsTokenSpaceGuid.PcdI2cSpeed
+  gNxpQoriqLsTokenSpaceGuid.PcdI2c0BaseAddr
+  gNxpQoriqLsTokenSpaceGuid.PcdI2cSize
+  gNxpQoriqLsTokenSpaceGuid.PcdNumI2cController
+
+[Guids]
+  gEfiEventVirtualAddressChangeGuid
+
+[Depex.common.DXE_RUNTIME_DRIVER]
+  gEfiCpuArchProtocolGuid
