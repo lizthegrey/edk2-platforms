@@ -122,14 +122,14 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdMaxVariableSize|0x2000
   gEfiMdeModulePkgTokenSpaceGuid.PcdMaxAuthVariableSize|0x2800
 
-  gNxpQoriqLsTokenSpaceGuid.PcdGutsBaseAddr|0x40418000
+  gNxpQoriqLsTokenSpaceGuid.PcdGutsBaseAddr|0x41000000
 
-  gNxpQoriqLsTokenSpaceGuid.PcdI2c5BaseAddr|0x40419000
+  gNxpQoriqLsTokenSpaceGuid.PcdI2c5BaseAddr|0x41001000
   gNxpQoriqLsTokenSpaceGuid.PcdI2cSize|0x10000
   gNxpQoriqLsTokenSpaceGuid.PcdNumI2cController|8
 
   ## PL011 - Serial Terminal
-  gEfiMdeModulePkgTokenSpaceGuid.PcdSerialRegisterBase|0x4041A000
+  gEfiMdeModulePkgTokenSpaceGuid.PcdSerialRegisterBase|0x41002000
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultBaudRate|115200
   gArmPlatformTokenSpaceGuid.PL011UartClkInHz|175000000
   gEfiMdePkgTokenSpaceGuid.PcdUartDefaultReceiveFifoDepth|0
