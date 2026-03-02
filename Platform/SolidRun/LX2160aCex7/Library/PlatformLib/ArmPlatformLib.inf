@@ -32,6 +32,7 @@
   ArmLib
   PL011UartClockLib
   SerialPortLib
+  SocClockLib
   SocLib
 
 [Sources.common]

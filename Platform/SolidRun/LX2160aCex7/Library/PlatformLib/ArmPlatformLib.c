@@ -19,6 +19,7 @@
 **/
 
 #include <Library/ArmPlatformLib.h>
+#include <Library/SocClockLib.h>
 #include <Library/SocLib.h>
 #include <Ppi/ArmMpCoreInfo.h>
 #include <Ppi/NxpPlatformGetClock.h>
@@ -52,9 +53,10 @@ NxpPlatformGetClock (
     Clock = 100 * 1000 * 1000; // 100 MHz
     break;
   case NXP_I2C_CLOCK:
+    Clock = SocGetClock (IP_I2C, VA_ARG (Args, UINT32));
+    break;
   case NXP_UART_CLOCK:
-    Clock = NxpPlatformGetClock (NXP_SYSTEM_CLOCK);
-    Clock = SocGetClock (Clock, ClockType, Args);
+    Clock = SocGetClock (IP_PL011, 0);
     break;
   default:
     break;
