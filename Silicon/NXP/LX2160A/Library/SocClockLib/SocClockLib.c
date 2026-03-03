@@ -113,6 +113,22 @@ SocGetClock (
     case IP_I2C:
       ReturnValue = PlatformClk >> 3;
       break;
+    case IP_CPU:
+      {
+        CCSR_CLK_CLUSTER *ClkGrpA = (VOID *)FSL_CLK_GRPA_ADDR;
+        CCSR_CLT_CTRL *ClkBase = (VOID *)PcdGet64 (PcdClkBaseAddr);
+        UINT32 PllRatio = (MmioRead32 ((UINTN)&ClkGrpA->PllnGsr[0].Gsr) >> 1) & 0x3f;
+        UINT32 CPllSel = (MmioRead32 ((UINTN)&ClkBase->ClkCnCsr[0].Csr) >> 27) & 0xf;
+        STATIC CONST UINT8 CplxPllDivisor[8] = {
+          [0] = 1, [1] = 2, [2] = 4, [4] = 1, [5] = 2, [6] = 4,
+        };
+        UINT8 Divisor = (CPllSel < 8) ? CplxPllDivisor[CPllSel] : 1;
+        if (Divisor == 0) {
+          Divisor = 1;
+        }
+        ReturnValue = (SysClkHz * PllRatio) / Divisor;
+      }
+      break;
     default:
       break;
   }

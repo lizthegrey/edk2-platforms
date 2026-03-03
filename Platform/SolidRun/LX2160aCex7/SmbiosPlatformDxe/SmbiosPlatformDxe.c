@@ -7,6 +7,7 @@
   SPDX-License-Identifier: BSD-2-Clause-Patent
 **/
 
+#include <Library/SocClockLib.h>
 #include "SmbiosPlatformDxe.h"
 
 
@@ -104,7 +105,7 @@ STATIC CONST ARM_TYPE3 mArmDefaultType3 = {
 /**
  * Structure defines attributes of the Processor
  */
-STATIC CONST ARM_TYPE4 mArmDefaultType4_a72 = {
+STATIC ARM_TYPE4 mArmDefaultType4_a72 = {
   {
     { /* SMBIOS_STRUCTURE Hdr */
       EFI_SMBIOS_TYPE_PROCESSOR_INFORMATION, /* UINT8 Type */
@@ -492,6 +493,16 @@ SmbiosTablePublishEntry (
     );
   if (EFI_ERROR (Status)) {
     return Status;
+  }
+
+  /* Patch Type 4 CPU speed from hardware clock registers */
+  {
+    UINT64 CpuFreqHz = SocGetClock (IP_CPU, 0);
+    if (CpuFreqHz > 0) {
+      UINT16 CpuFreqMHz = (UINT16)(CpuFreqHz / 1000000);
+      mArmDefaultType4_a72.Base.MaxSpeed = CpuFreqMHz;
+      mArmDefaultType4_a72.Base.CurrentSpeed = CpuFreqMHz;
+    }
   }
 
   Status = InstallAllStructures (Smbios);

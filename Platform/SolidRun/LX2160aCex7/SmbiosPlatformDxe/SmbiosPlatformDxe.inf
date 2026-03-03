@@ -34,8 +34,12 @@
 
 [Packages]
   MdePkg/MdePkg.dec
+  Silicon/NXP/NxpQoriqLs.dec
+  Silicon/NXP/Chassis/Chassis3V2/Chassis3V2.dec
 
 [LibraryClasses]
+  IoLib
+  SocClockLib
   UefiBootServicesTableLib
   UefiDriverEntryPoint
 
