@@ -146,6 +146,16 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareRevision|$(BUILD_NUMBER)
 
   #
+  # Program PCIe Resizable BAR to its largest advertised size at POST.
+  # Lets amdgpu on the WX 3200 (and any other ReBAR-capable dGPU) skip
+  # the kernel's BAR-resize path entirely, sidestepping the linux-pci
+  # regression where pci_resize_resource() silently drops BARs on
+  # devices sitting directly on a PCI root bus (which is every device
+  # on this platform, since the Mobiveil root port is hidden).
+  #
+  gEfiMdeModulePkgTokenSpaceGuid.PcdPcieResizableBarSupport|TRUE
+
+  #
   # SMBIOS entry point version
   #
   gEfiMdeModulePkgTokenSpaceGuid.PcdSmbiosVersion|0x0302
