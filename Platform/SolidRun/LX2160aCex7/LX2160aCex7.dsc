@@ -142,7 +142,7 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdDxeNxMemoryProtectionPolicy|0xC000000000007FD1
   gEfiMdeModulePkgTokenSpaceGuid.PcdSetNxForStack|TRUE
 
-  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"202602"
+  gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareVersionString|L"202608"
   gEfiMdeModulePkgTokenSpaceGuid.PcdFirmwareRevision|$(BUILD_NUMBER)
 
   #
