@@ -221,5 +221,5 @@
 #
 ###################################################################################################
 [BuildOptions.common.EDKII.MM_STANDALONE, BuildOptions.common.EDKII.MM_CORE_STANDALONE]
-GCC:*_*_*_CC_FLAGS = -mstrict-align -mgeneral-regs-only
+GCC:*_*_*_CC_FLAGS = -mstrict-align -mgeneral-regs-only -Wno-unused-but-set-variable -Wno-unused-const-variable
 GCC:*_*_*_DLINK_FLAGS = -z common-page-size=0x1000

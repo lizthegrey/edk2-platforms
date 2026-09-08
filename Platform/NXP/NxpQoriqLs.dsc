@@ -212,7 +212,7 @@
 [BuildOptions]
   GCC:*_*_ARM_PLATFORM_FLAGS == -march=armv8-a
   GCC:RELEASE_*_*_CC_FLAGS  = -DMDEPKG_NDEBUG
-  GCC:*_*_*_CC_FLAGS = -DDISABLE_NEW_DEPRECATED_INTERFACES
+  GCC:*_*_*_CC_FLAGS = -DDISABLE_NEW_DEPRECATED_INTERFACES -Wno-unused-but-set-variable -Wno-unused-const-variable
 
 [BuildOptions.common.EDKII.DXE_RUNTIME_DRIVER]
   GCC:*_*_ARM_DLINK_FLAGS = -z common-page-size=0x1000
