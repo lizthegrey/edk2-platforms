@@ -15,7 +15,7 @@
 *
 **/
 
-#include <Library/AcpiLib.h>
+#include <AcpiHelperMacros.h>
 #include <Library/PcdLib.h>
 #include <IndustryStandard/Acpi.h>
 #include <IndustryStandard/SerialPortConsoleRedirectionTable.h>
@@ -33,7 +33,7 @@ STATIC EFI_ACPI_SERIAL_PORT_CONSOLE_REDIRECTION_TABLE Spcr = {
     EFI_ACPI_RESERVED_BYTE,
     EFI_ACPI_RESERVED_BYTE
   },                                                                   //Reserved1
-  ARM_GAS32 (UART0_BASE),                                              //BaseAddress
+  ACPI_GAS32 (UART0_BASE),                                              //BaseAddress
   EFI_ACPI_SERIAL_PORT_CONSOLE_REDIRECTION_TABLE_INTERRUPT_TYPE_GIC,   //InterruptType
   0,                                                                   // irq Not used on ARM
   UART0_IT,                                                            //GlobalSystemInterrupt
