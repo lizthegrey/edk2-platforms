@@ -13,7 +13,7 @@
 
 **/
 
-#ifndef __I2C_DXE_H___
+#ifndef __I2C_DXE_H__
 #define __I2C_DXE_H__
 
 #include <Uefi.h>
