@@ -544,7 +544,7 @@ EFI_STATUS
 ParseRequest(
   IN      FSPI_MASTER                   *Fspi,
   IN      EFI_SPI_REQUEST_PACKET        *RequestPacket,
-  IN OUT  FSPI_REQUEST                  *Request;
+  IN OUT  FSPI_REQUEST                  *Request
   );
 
 /**
