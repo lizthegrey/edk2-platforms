@@ -142,18 +142,42 @@ ValidateFvHeader (
   IN  SPI_NOR_FLASH_CONTEXT   *Context
   )
 {
+  EFI_STATUS                  Status;
   UINT16                      Checksum;
-  EFI_FIRMWARE_VOLUME_HEADER  *FwVolHeader;
-  VARIABLE_STORE_HEADER       *VariableStoreHeader;
+  EFI_FIRMWARE_VOLUME_HEADER  FvHeader;
+  EFI_FIRMWARE_VOLUME_HEADER  *FullFvHeader;
+  VARIABLE_STORE_HEADER       VariableStoreHeader;
   UINTN                       VariableStoreLength;
   UINTN                       FvLength;
+  UINTN                       FlashOffset;
   SPI_NOR_PARAMS              *SpiNorParams;
   SFDP_FLASH_PARAM            *ParamTable;
 
   SpiNorParams = Context->SpiNorParams;
   ParamTable = SpiNorParams->ParamTable;
 
-  FwVolHeader = (EFI_FIRMWARE_VOLUME_HEADER *)PcdGet64 (PcdFlashNvStorageVariableBase64);
+  //
+  // Read the headers with SPI commands through the SPI I/O protocol rather
+  // than by dereferencing the FlexSPI memory-mapped window. Nothing in the
+  // SD/eMMC boot path guarantees the AHB read path of the controller is set
+  // up, and a failed AHB read surfaces as an asynchronous SError, which is
+  // fatal this early in DXE. The command path is what every other access in
+  // this driver already uses.
+  //
+  FlashOffset = (UINTN)(PcdGet64 (PcdFlashNvStorageVariableBase64) - mFlashNvStorageBase);
+
+  Status = ReadFlashData (
+             Context->SpiIo,
+             SpiNorParams,
+             FlashOffset,
+             sizeof (FvHeader),
+             (UINT8 *)&FvHeader
+             );
+  if (EFI_ERROR (Status)) {
+    DEBUG ((DEBUG_ERROR, "%a: Failed to read Firmware Volume header: %r\n",
+      __FUNCTION__, Status));
+    return EFI_NOT_FOUND;
+  }
 
   FvLength = SFDP_PARAM_FLASH_SIZE(ParamTable);
 
@@ -162,9 +186,11 @@ ValidateFvHeader (
   // Length of FvBlock cannot be 2**64-1
   // HeaderLength cannot be an odd number
   //
-  if (   (FwVolHeader->Revision  != EFI_FVH_REVISION)
-      || (FwVolHeader->Signature != EFI_FVH_SIGNATURE)
-      || (FwVolHeader->FvLength  != FvLength)
+  if (   (FvHeader.Revision  != EFI_FVH_REVISION)
+      || (FvHeader.Signature != EFI_FVH_SIGNATURE)
+      || (FvHeader.FvLength  != FvLength)
+      || (FvHeader.HeaderLength < sizeof (EFI_FIRMWARE_VOLUME_HEADER))
+      || ((FvHeader.HeaderLength & 1) != 0)
       )
   {
     DEBUG ((DEBUG_ERROR, "%a: No Firmware Volume header present\n",
@@ -173,32 +199,63 @@ ValidateFvHeader (
   }
 
   // Check the Firmware Volume Guid
-  if ( CompareGuid (&FwVolHeader->FileSystemGuid, &gEfiSystemNvDataFvGuid) == FALSE ) {
+  if ( CompareGuid (&FvHeader.FileSystemGuid, &gEfiSystemNvDataFvGuid) == FALSE ) {
     DEBUG ((DEBUG_ERROR, "%a: Firmware Volume Guid non-compatible\n",
       __FUNCTION__));
     return EFI_NOT_FOUND;
   }
 
-  // Verify the header checksum
-  Checksum = CalculateSum16((UINT16*)FwVolHeader, FwVolHeader->HeaderLength);
+  // Verify the header checksum over the full header length
+  FullFvHeader = AllocatePool (FvHeader.HeaderLength);
+  if (FullFvHeader == NULL) {
+    return EFI_OUT_OF_RESOURCES;
+  }
+
+  Status = ReadFlashData (
+             Context->SpiIo,
+             SpiNorParams,
+             FlashOffset,
+             FvHeader.HeaderLength,
+             (UINT8 *)FullFvHeader
+             );
+  if (EFI_ERROR (Status)) {
+    FreePool (FullFvHeader);
+    DEBUG ((DEBUG_ERROR, "%a: Failed to read full Firmware Volume header: %r\n",
+      __FUNCTION__, Status));
+    return EFI_NOT_FOUND;
+  }
+
+  Checksum = CalculateSum16((UINT16*)FullFvHeader, FvHeader.HeaderLength);
+  FreePool (FullFvHeader);
   if (Checksum != 0) {
     DEBUG ((DEBUG_ERROR, "%a: FV checksum is invalid (Checksum:0x%X)\n",
       __FUNCTION__, Checksum));
     return EFI_NOT_FOUND;
   }
 
-  VariableStoreHeader = (VARIABLE_STORE_HEADER*)((UINTN)FwVolHeader + FwVolHeader->HeaderLength);
+  Status = ReadFlashData (
+             Context->SpiIo,
+             SpiNorParams,
+             FlashOffset + FvHeader.HeaderLength,
+             sizeof (VariableStoreHeader),
+             (UINT8 *)&VariableStoreHeader
+             );
+  if (EFI_ERROR (Status)) {
+    DEBUG ((DEBUG_ERROR, "%a: Failed to read Variable Store header: %r\n",
+      __FUNCTION__, Status));
+    return EFI_NOT_FOUND;
+  }
 
   // Check the Variable Store Guid
-  if (!CompareGuid (&VariableStoreHeader->Signature, &gEfiVariableGuid) &&
-      !CompareGuid (&VariableStoreHeader->Signature, &gEfiAuthenticatedVariableGuid)) {
+  if (!CompareGuid (&VariableStoreHeader.Signature, &gEfiVariableGuid) &&
+      !CompareGuid (&VariableStoreHeader.Signature, &gEfiAuthenticatedVariableGuid)) {
     DEBUG ((DEBUG_ERROR, "%a: Variable Store Guid non-compatible\n",
       __FUNCTION__));
     return EFI_NOT_FOUND;
   }
 
-  VariableStoreLength = PcdGet32 (PcdFlashNvStorageVariableSize) - FwVolHeader->HeaderLength;
-  if (VariableStoreHeader->Size != VariableStoreLength) {
+  VariableStoreLength = PcdGet32 (PcdFlashNvStorageVariableSize) - FvHeader.HeaderLength;
+  if (VariableStoreHeader.Size != VariableStoreLength) {
     DEBUG ((DEBUG_ERROR, "%a: Variable Store Length does not match\n",
       __FUNCTION__));
     return EFI_NOT_FOUND;
